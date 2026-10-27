@@ -4,6 +4,7 @@ import Workspace from '../components/Workspace.astro';
 import TagsLibrary from '../components/TagsLibrary.astro';
 import Certificate from '../components/Certificate.astro';
 import Modal from '../components/Modal.astro';
+import QuizModal from '../components/QuizModal.astro';
 ---
 
 <Layout title="Академия Веб-Агентов | Интерактивный тренажер HTML + CSS">
@@ -11,6 +12,7 @@ import Modal from '../components/Modal.astro';
   <TagsLibrary />
   <Certificate />
   <Modal />
+  <QuizModal />
 
   <script is:inline>
     // -------------------------------------------------------------
@@ -399,6 +401,264 @@ import Modal from '../components/Modal.astro';
         });
       });
     });
+
+    // -------------------------------------------------------------
+    // BLOCK QUIZZES DATA (ВИКТОРИНЫ ПОСЛЕ КАЖДОГО БЛОКА)
+    // -------------------------------------------------------------
+    const BLOCK_QUIZZES = {
+      0: {
+        blockId: 0,
+        blockTitle: "Дело №0: Чертёж сайта (Анатомия HTML)",
+        questions: [
+          {
+            question: "Какой тег сообщает браузеру, что документ написан на современном стандарте HTML5?",
+            options: [
+              "<!DOCTYPE html>",
+              "<robot start>",
+              "<html5-code>"
+            ],
+            correctIndex: 0,
+            explanation: "<!DOCTYPE html> — это паспорт сайта, сообщающий браузеру об использовании стандарта HTML5."
+          },
+          {
+            question: "В какой невидимой части страницы прячутся служебные настройки и название вкладки?",
+            options: [
+              "<head> (Мозг сайта)",
+              "<body> (Тело сайта)",
+              "<footer-secret>"
+            ],
+            correctIndex: 0,
+            explanation: "В теге <head> хранятся настройки сайта, подключение стилей и заголовок вкладки <title>."
+          },
+          {
+            question: "Где обязательно должен находиться весь видимый контент сайта (заголовки, текст, фото)?",
+            options: [
+              "До тега <!DOCTYPE html>",
+              "Внутри тега <body> ... </body>",
+              "Внутри тега <head>"
+            ],
+            correctIndex: 1,
+            explanation: "Всё, что посетитель видит на экране iPad, обязательно помещается между <body> и </body>."
+          }
+        ]
+      },
+      1: {
+        blockId: 1,
+        blockTitle: "Дело №1: Первые слова шпиона (h1, p)",
+        questions: [
+          {
+            question: "Какой тег создает самый главный и крупный заголовок на веб-странице?",
+            options: [
+              "<h1>",
+              "<p>",
+              "<bigtitle>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <h1> (Heading 1) — самый важный и громкий рупор страницы."
+          },
+          {
+            question: "Как правильно закрывается парный тег абзаца текста?",
+            options: [
+              "<p/>",
+              "</p>",
+              "<close p>"
+            ],
+            correctIndex: 1,
+            explanation: "Парные теги всегда закрываются косой чертой перед именем тега: </p>."
+          },
+          {
+            question: "Какова главная роль тега <p> в разметке текста?",
+            options: [
+              "Создать отдельный абзац текста с удобными отступами",
+              "Запустить видеоролик",
+              "Сделать все буквы невидимыми"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <p> (Paragraph) форматирует текст в аккуратный читаемый абзац."
+          }
+        ]
+      },
+      2: {
+        blockId: 2,
+        blockTitle: "Дело №2: Маскировка текста (b, i)",
+        questions: [
+          {
+            question: "Какой тег делает буквы полужирными и бронированными (bold)?",
+            options: [
+              "<b>",
+              "<i>",
+              "<bold>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <b> происходит от слова Bold и делает начертание шрифта жирным."
+          },
+          {
+            question: "Какой тег наклоняет текст изящным курсивом (italic)?",
+            options: [
+              "<slant>",
+              "<i>",
+              "<b>"
+            ],
+            correctIndex: 1,
+            explanation: "Тег <i> происходит от слова Italic и наклоняет буквы курсивом."
+          },
+          {
+            question: "Как правильно выделить слово жирным ВНУТРИ параграфа по правилу «матрешки»?",
+            options: [
+              "<p>Пароль: <b>1234</b></p>",
+              "<p>Пароль: <b>1234</p></b>",
+              "<b><p>Пароль: 1234</b></p>"
+            ],
+            correctIndex: 0,
+            explanation: "Внутренний тег <b> должен закрыться раньше, чем закроется внешний тег <p>."
+          }
+        ]
+      },
+      3: {
+        blockId: 3,
+        blockTitle: "Дело №3: Секретный инвентарь (ul, li)",
+        questions: [
+          {
+            question: "Какой тег создает контейнер для маркированного списка (с точками)?",
+            options: [
+              "<ul>",
+              "<li>",
+              "<items>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <ul> (Unordered List) создает маркированный список."
+          },
+          {
+            question: "Какой тег оборачивает КАЖДЫЙ отдельный пункт внутри списка?",
+            options: [
+              "<point>",
+              "<li>",
+              "<item>"
+            ],
+            correctIndex: 1,
+            explanation: "Тег <li> (List Item) задает отдельную строчку-пункт внутри списка."
+          },
+          {
+            question: "Может ли пункт <li> находиться на странице сам по себе без тега <ul> или <ol>?",
+            options: [
+              "Нет, по стандарту HTML теги <li> всегда должны быть обернуты в тег списка",
+              "Да, в любом месте",
+              "Только если это таблица"
+            ],
+            correctIndex: 0,
+            explanation: "Теги <li> — дочерние элементы и семантически всегда требуют родителя <ul> или <ol>."
+          }
+        ]
+      },
+      4: {
+        blockId: 4,
+        blockTitle: "Дело №4: Фотодосье и порталы (img, a)",
+        questions: [
+          {
+            question: "В каком атрибуте тега <img> указывается адрес файла картинки?",
+            options: [
+              "link='...'",
+              "src='...'",
+              "href='...'"
+            ],
+            correctIndex: 1,
+            explanation: "Атрибут src (source — источник) указывает браузеру путь к файлу изображения."
+          },
+          {
+            question: "Какой тег превращает текст или картинку в кликабельную ссылку-портал?",
+            options: [
+              "<a>",
+              "<link>",
+              "<go>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <a> (Anchor — якорь) создает гиперссылку для перехода между сайтами."
+          },
+          {
+            question: "Какой атрибут ссылки указывает интернет-адрес назначения?",
+            options: [
+              "href='...'",
+              "target='...'",
+              "to='...'"
+            ],
+            correctIndex: 0,
+            explanation: "В атрибуте href (Hypertext Reference) пишется целевой веб-адрес."
+          }
+        ]
+      },
+      5: {
+        blockId: 5,
+        blockTitle: "Дело №5: Цвета и лазерная кнопка (style, button)",
+        questions: [
+          {
+            question: "Внутри какого тега HTML пишутся правила оформления CSS?",
+            options: [
+              "<color>",
+              "<paint>",
+              "<style>"
+            ],
+            correctIndex: 2,
+            explanation: "В тег <style> помещаются правила языка стилей CSS."
+          },
+          {
+            question: "Какое CSS-свойство перекрашивает задний фон элемента или страницы?",
+            options: [
+              "background",
+              "text-color",
+              "border-style"
+            ],
+            correctIndex: 0,
+            explanation: "Свойство background (или background-color) управляет заливкой фона."
+          },
+          {
+            question: "Какой тег создает кликабельную кнопку на веб-странице?",
+            options: [
+              "<button>",
+              "<click>",
+              "<press>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <button> создает интерактивную кнопку для кликов и касаний."
+          }
+        ]
+      },
+      6: {
+        blockId: 6,
+        blockTitle: "Дело №6: Финальная спецоперация",
+        questions: [
+          {
+            question: "В каком порядке должны следовать главные теги любого сайта?",
+            options: [
+              "<!DOCTYPE html> ➔ <html> ➔ <head> ➔ <body>",
+              "<body> ➔ <head> ➔ <html> ➔ <!DOCTYPE html>",
+              "<html> ➔ <!DOCTYPE html> ➔ <body> ➔ <head>"
+            ],
+            correctIndex: 0,
+            explanation: "Всегда сначала идет <!DOCTYPE html>, затем <html>, служебный <head> и видимый <body>."
+          },
+          {
+            question: "Как сделать так, чтобы при клике на картинку открывался другой сайт?",
+            options: [
+              "Обернуть <img> внутрь ссылки: <a href='...'><img src='...'></a>",
+              "Написать <img href='...'>",
+              "Картинки не могут быть ссылками"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <a> может обернуть любой видимый элемент, включая картинку <img>."
+          },
+          {
+            question: "Что означает всемирная аббревиатура HTML?",
+            options: [
+              "HyperText Markup Language (Язык разметки гипертекста)",
+              "High Tech Machine Learning",
+              "Huge Tool Making Links"
+            ],
+            correctIndex: 0,
+            explanation: "HTML — HyperText Markup Language, фундамент всех сайтов в сети интернет."
+          }
+        ]
+      }
+    };
 
     // -------------------------------------------------------------
     // LOCAL STATE (RESTORED FROM BROWSER STORAGE)
@@ -853,6 +1113,19 @@ ${code}
 
     // Step / Level Navigation
     function nextLevel() {
+      const currentLvl = LEVELS[state.currentLevelIndex];
+      const mission = MISSIONS[currentLvl.missionId];
+      const isLastStepOfMission = currentLvl.stepIndex === mission.steps.length - 1;
+
+      // If at end of mission and haven't just completed its quiz:
+      if (isLastStepOfMission && !quizState.justCompletedBlockQuiz[currentLvl.missionId]) {
+        openQuizForBlock(currentLvl.missionId, true);
+        return;
+      }
+
+      // Reset flag
+      quizState.justCompletedBlockQuiz[currentLvl.missionId] = false;
+
       if (state.currentLevelIndex < LEVELS.length - 1) {
         playSound('click');
         loadLevel(state.currentLevelIndex + 1);
@@ -1005,6 +1278,191 @@ ${code}
       document.getElementById("modal-overlay")?.classList.remove("open");
     }
 
+    // -------------------------------------------------------------
+    // QUIZ CONTROLLER (ВИКТОРИНА ПОСЛЕ КАЖДОГО БЛОКА)
+    // -------------------------------------------------------------
+    const quizState = {
+      activeBlockId: 0,
+      currentQIdx: 0,
+      userAnswers: [],
+      autoNextOnFinish: false,
+      justCompletedBlockQuiz: {}
+    };
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function openQuizForBlock(blockId, autoNext = false) {
+      playSound('click');
+      const quiz = BLOCK_QUIZZES[blockId] || BLOCK_QUIZZES[0];
+      quizState.activeBlockId = blockId;
+      quizState.currentQIdx = 0;
+      quizState.userAnswers = [];
+      quizState.autoNextOnFinish = autoNext;
+
+      const titleEl = document.getElementById("quiz-block-title");
+      if (titleEl) titleEl.textContent = quiz.blockTitle;
+
+      const badgeEl = document.getElementById("quiz-badge");
+      if (badgeEl) badgeEl.textContent = `🎯 ВИКТОРИНА: ДЕЛО №${blockId}`;
+
+      const qView = document.getElementById("quiz-question-view");
+      const rView = document.getElementById("quiz-result-view");
+      if (qView) qView.style.display = "block";
+      if (rView) rView.style.display = "none";
+
+      renderQuizQuestion();
+      document.getElementById("quiz-modal-overlay")?.classList.add("open");
+    }
+
+    function closeQuiz() {
+      playSound('click');
+      document.getElementById("quiz-modal-overlay")?.classList.remove("open");
+    }
+
+    function renderQuizQuestion() {
+      const quiz = BLOCK_QUIZZES[quizState.activeBlockId];
+      if (!quiz) return;
+      const q = quiz.questions[quizState.currentQIdx];
+      const total = quiz.questions.length;
+
+      const stepText = document.getElementById("quiz-step-text");
+      if (stepText) stepText.textContent = `Вопрос ${quizState.currentQIdx + 1} из ${total}`;
+
+      const progressFill = document.getElementById("quiz-progress-fill");
+      if (progressFill) {
+        const pct = Math.round(((quizState.currentQIdx + 1) / total) * 100);
+        progressFill.style.width = `${pct}%`;
+      }
+
+      const qNum = document.getElementById("quiz-q-num");
+      if (qNum) qNum.textContent = `Вопрос ${quizState.currentQIdx + 1}:`;
+
+      const qTitle = document.getElementById("quiz-q-title");
+      if (qTitle) qTitle.textContent = q.question;
+
+      const letters = ["А", "Б", "В", "Г"];
+      const optionsList = document.getElementById("quiz-options-list");
+      if (optionsList) {
+        optionsList.innerHTML = q.options.map((opt, oIdx) => `
+          <button class="quiz-option-btn" data-opt-idx="${oIdx}">
+            <span class="quiz-opt-letter">${letters[oIdx] || oIdx + 1}</span>
+            <span class="quiz-opt-text">${escapeHtml(opt)}</span>
+          </button>
+        `).join("");
+
+        optionsList.querySelectorAll(".quiz-option-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const idx = parseInt(btn.getAttribute("data-opt-idx") || "0", 10);
+            handleQuizChoice(idx);
+          });
+        });
+      }
+    }
+
+    function handleQuizChoice(choiceIdx) {
+      playSound('click');
+      quizState.userAnswers[quizState.currentQIdx] = choiceIdx;
+      const quiz = BLOCK_QUIZZES[quizState.activeBlockId];
+
+      quizState.currentQIdx++;
+      if (quizState.currentQIdx < quiz.questions.length) {
+        renderQuizQuestion();
+      } else {
+        renderQuizResults();
+      }
+    }
+
+    function renderQuizResults() {
+      const quiz = BLOCK_QUIZZES[quizState.activeBlockId];
+      const qView = document.getElementById("quiz-question-view");
+      const rView = document.getElementById("quiz-result-view");
+      if (qView) qView.style.display = "none";
+      if (rView) rView.style.display = "block";
+
+      let correctCount = 0;
+      quiz.questions.forEach((q, idx) => {
+        if (quizState.userAnswers[idx] === q.correctIndex) {
+          correctCount++;
+        }
+      });
+
+      const iconEl = document.getElementById("quiz-result-icon");
+      const headingEl = document.getElementById("quiz-result-heading");
+      const scoreEl = document.getElementById("quiz-result-score");
+
+      if (correctCount === quiz.questions.length) {
+        launchConfetti();
+        playSound('win');
+        if (iconEl) iconEl.textContent = "🏆";
+        if (headingEl) headingEl.textContent = "Идеальный результат, Спецагент!";
+        if (scoreEl) scoreEl.textContent = `Правильных ответов: ${correctCount} из ${quiz.questions.length} (100%!) 🌟`;
+        state.xp += 25;
+        saveState();
+        updateHeaderUI();
+      } else if (correctCount >= 2) {
+        playSound('win');
+        if (iconEl) iconEl.textContent = "🎖️";
+        if (headingEl) headingEl.textContent = "Отличная работа!";
+        if (scoreEl) scoreEl.textContent = `Правильных ответов: ${correctCount} из ${quiz.questions.length} 👍`;
+      } else {
+        playSound('click');
+        if (iconEl) iconEl.textContent = "🔍";
+        if (headingEl) headingEl.textContent = "Есть над чем поработать!";
+        if (scoreEl) scoreEl.textContent = `Правильных ответов: ${correctCount} из ${quiz.questions.length} — посмотри правильные ответы ниже!`;
+      }
+
+      const breakdownList = document.getElementById("quiz-breakdown-list");
+      if (breakdownList) {
+        breakdownList.innerHTML = quiz.questions.map((q, idx) => {
+          const userChoice = quizState.userAnswers[idx];
+          const isCorrect = userChoice === q.correctIndex;
+          const userAnsText = q.options[userChoice] !== undefined ? q.options[userChoice] : "Не отвечено";
+          const correctAnsText = q.options[q.correctIndex];
+
+          return `
+            <div class="quiz-breakdown-card ${isCorrect ? 'card-correct' : 'card-wrong'}">
+              <div class="breakdown-top-line">
+                <span class="breakdown-q-title">Вопрос ${idx + 1}: ${escapeHtml(q.question)}</span>
+                <span class="breakdown-badge ${isCorrect ? 'badge-correct' : 'badge-wrong'}">
+                  ${isCorrect ? '✅ Верно' : '❌ Ошибка'}
+                </span>
+              </div>
+              <div class="breakdown-your-ans">
+                <strong>Твой ответ:</strong> ${escapeHtml(userAnsText)}
+              </div>
+              ${!isCorrect ? `
+                <div class="breakdown-correct-ans">
+                  👉 <strong>Правильный ответ:</strong> ${escapeHtml(correctAnsText)}
+                </div>
+              ` : ''}
+              <div class="breakdown-explanation">
+                💡 <strong>Объяснение:</strong> ${escapeHtml(q.explanation)}
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+    }
+
+    function retryQuiz() {
+      playSound('click');
+      quizState.currentQIdx = 0;
+      quizState.userAnswers = [];
+      const qView = document.getElementById("quiz-question-view");
+      const rView = document.getElementById("quiz-result-view");
+      if (rView) rView.style.display = "none";
+      if (qView) qView.style.display = "block";
+      renderQuizQuestion();
+    }
+
     function resetGame() {
       if (confirm("Точно сбросить весь прогресс и начать все дела заново?")) {
         localStorage.clear();
@@ -1087,6 +1545,23 @@ ${code}
 
       // Modal close
       document.getElementById("modal-close-btn")?.addEventListener("click", closeModal);
+
+      // Quiz Listeners
+      document.getElementById("footer-quiz-btn")?.addEventListener("click", () => {
+        const curLvl = LEVELS[state.currentLevelIndex];
+        openQuizForBlock(curLvl.missionId, false);
+      });
+      document.getElementById("quiz-close-x")?.addEventListener("click", closeQuiz);
+      document.getElementById("quiz-retry-btn")?.addEventListener("click", retryQuiz);
+      document.getElementById("quiz-continue-btn")?.addEventListener("click", () => {
+        const autoNext = quizState.autoNextOnFinish;
+        const missionId = quizState.activeBlockId;
+        closeQuiz();
+        if (autoNext) {
+          quizState.justCompletedBlockQuiz[missionId] = true;
+          nextLevel();
+        }
+      });
 
       // Quick stickers
       document.querySelectorAll(".sticker-pill-mini").forEach(btn => {
