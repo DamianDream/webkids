@@ -1,0 +1,145 @@
+---
+---
+<main class="workspace-pane-compact" id="main-workspace">
+  <!-- Left Column: Step Bar, Stickers, Editor & Checkpoint -->
+  <div class="workspace-left-column">
+    
+    <!-- Compact Step Control Bar -->
+    <div class="step-control-card">
+      <div class="step-top-row">
+        <span class="mission-mini-pill" id="briefing-badge">ДЕЛО №000</span>
+        <div id="steps-track" class="steps-track-compact">
+          <!-- Step pills injected here -->
+        </div>
+        <span class="xp-gain-badge" id="step-xp-badge">⭐ +50 XP</span>
+      </div>
+
+      <!-- Compact Step Hint -->
+      <div class="step-info-compact">
+        <div class="step-info-left">
+          <span class="step-icon-emoji" id="step-icon">🏛️</span>
+          <div>
+            <div class="step-headline-text" id="step-headline">Шаг: Загрузка...</div>
+            <div class="step-desc-text" id="step-explanation">Объяснение...</div>
+          </div>
+        </div>
+        <div class="step-formula-box">
+          <span style="font-size: 11px; color: #64748b; font-weight: bold;">Формула:</span>
+          <code id="step-formula" class="formula-code">&lt;tag&gt;...&lt;/tag&gt;</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Tag Stickers Toolbar -->
+    <div class="tag-stickers-compact">
+      <span class="stickers-label-mini">🧩 Шпаргалка по тегам:</span>
+      <button class="sticker-pill-mini" data-start="<h1>" data-end="</h1>">+ &lt;h1&gt;</button>
+      <button class="sticker-pill-mini" data-start="<p>" data-end="</p>">+ &lt;p&gt;</button>
+      <button class="sticker-pill-mini" data-start="<b>" data-end="</b>">+ &lt;b&gt;</button>
+      <button class="sticker-pill-mini" data-start="<i>" data-end="</i>">+ &lt;i&gt;</button>
+      <button class="sticker-pill-mini" data-start="<ul>\n  <li>" data-end="</li>\n</ul>">+ &lt;ul&gt;</button>
+      <button class="sticker-pill-mini" data-start="<img src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400' width='240'>" data-end="">+ &lt;img&gt;</button>
+      <button class="sticker-pill-mini" data-start="<a href='https://wikipedia.org' target='_blank'>" data-end="</a>">+ &lt;a&gt;</button>
+      <button class="sticker-pill-mini" data-start="<button class='fun-btn' onclick='alert(&quot;Код принят!&quot;)'>" data-end="</button>">+ &lt;button&gt;</button>
+      <button class="sticker-pill-mini" data-start="<style>\n  body { background: #f0fdf4; color: #166534; }\n</style>\n" data-end="">+ &lt;style&gt;</button>
+    </div>
+
+    <!-- Code Editor with Locked Gray HTML Skeleton -->
+    <div class="editor-wrapper-compact">
+      <!-- Locked Top Skeleton -->
+      <div class="locked-html-skeleton">
+        <span class="locked-tag-comment">🔒 Обязательный каркас документа (не редактируется):</span>
+        <div id="skel-doctype">&lt;!DOCTYPE html&gt; <span class="skel-tag-note">← Паспорт сайта</span></div>
+        <div id="skel-html">&lt;html lang="ru"&gt; <span class="skel-tag-note">← Стены дома</span></div>
+        <div id="skel-head">&nbsp;&nbsp;&lt;head&gt;<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;title id="locked-title-text"&gt;Секретный Штаб Агента&lt;/title&gt;<br />
+        &nbsp;&nbsp;&lt;/head&gt; <span class="skel-tag-note">← Мозг и настройки</span></div>
+        <div id="skel-body">&nbsp;&nbsp;&lt;body&gt; <span style="color: #059669; font-weight: bold;">← Твоя зона! Пиши свои теги здесь:</span></div>
+      </div>
+
+      <!-- Editable Area (Starts Clean, Child Writes Themselves!) -->
+      <div class="editable-code-zone">
+        <textarea id="code-editor" class="code-field-compact" spellcheck="false" placeholder="Напиши теги своими руками здесь..."></textarea>
+      </div>
+
+      <!-- Locked Bottom Skeleton -->
+      <div class="locked-html-skeleton-bottom">
+        <div id="skel-body-end">&nbsp;&nbsp;&lt;/body&gt; <span style="color: #059669; font-weight: bold;">← Конец body</span></div>
+        <div id="skel-html-end">&lt;/html&gt; <span class="skel-tag-note">← Замок дома</span></div>
+      </div>
+    </div>
+
+    <!-- Task Checkpoint Bar below Editor -->
+    <div class="task-action-bar-compact">
+      <div id="tasks-container" class="task-single-row">
+        <!-- Injected task checkbox -->
+      </div>
+      <div class="step-nav-buttons">
+        <button class="btn-step-nav" id="prev-step-btn" title="Предыдущий шаг">‹</button>
+        <button class="btn-action-run" id="run-code-btn" title="Запустить код на планшете iPad">
+          <span class="btn-icon">▶</span>
+          <span>Запустить</span>
+        </button>
+        <button class="btn-action-check" id="check-code-btn" title="Проверить задание и получить XP">
+          <span class="btn-icon">✓</span>
+          <span>Проверить</span>
+        </button>
+        <button class="btn-step-nav" id="next-step-btn" title="Следующий шаг">›</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Right Column: 100% Vector Scalable Apple iPad Pro Simulator -->
+  <div class="workspace-right-column">
+    <div class="ipad-vector-chassis">
+      <div class="ipad-vector-bezel">
+        
+        <!-- Apple Face ID & Camera Sensor Bar (from user mockup) -->
+        <div class="ipad-vector-sensors">
+          <span class="sensor-dot"></span>
+          <span class="camera-lens"></span>
+          <span class="sensor-dot"></span>
+        </div>
+
+        <!-- iPad Glass Display Area -->
+        <div class="ipad-vector-screen">
+          
+          <!-- iOS Status Bar -->
+          <div class="ipad-status-bar">
+            <span>9:41 AM</span>
+            <span style="font-weight: 800; color: #2563eb;">iPad Спецагента</span>
+            <span>100% 🔋</span>
+          </div>
+
+          <!-- Safari Browser Bar -->
+          <div class="safari-browser-bar">
+            <div class="browser-nav-btns">
+              <span>‹</span>
+              <span>›</span>
+            </div>
+            
+            <div class="safari-url-pill">
+              <span>🔒</span>
+              <span id="safari-url-text">agent-net.secret/my-base.html</span>
+            </div>
+
+            <div class="safari-reload-icon" id="safari-reload-btn" title="Обновить сайт">
+              🔄
+            </div>
+          </div>
+
+          <!-- Live Website Frame inside iPad -->
+          <iframe id="preview-frame" class="live-display-frame-vector"></iframe>
+
+          <!-- Floating Run Notification Toast on iPad -->
+          <div id="ipad-run-toast" class="ipad-run-toast">🚀 Сайт запущен на iPad</div>
+
+          <!-- iOS Bottom Home Indicator Bar -->
+          <div class="ios-home-indicator-bar"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>

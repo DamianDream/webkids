@@ -1,0 +1,1346 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Workspace from '../components/Workspace.astro';
+import TagsLibrary from '../components/TagsLibrary.astro';
+import Certificate from '../components/Certificate.astro';
+import Modal from '../components/Modal.astro';
+---
+
+<Layout title="Академия Веб-Агентов | Интерактивный тренажер HTML + CSS">
+  <Header />
+
+  <div class="main-layout">
+    <Sidebar />
+    <Workspace />
+    <TagsLibrary />
+    <Certificate />
+  </div>
+
+  <Modal />
+
+  <script is:inline>
+    // -------------------------------------------------------------
+    // TAGS ENCYCLOPEDIA (КНИГА ТЕГОВ)
+    // -------------------------------------------------------------
+    const ALL_TAGS = [
+      {
+        tag: "<!DOCTYPE html>",
+        name: "Паспорт документа",
+        icon: "📜",
+        type: "HTML",
+        analogy: "Официальный паспорт страницы. Говорит браузеру: 'Это современный сайт на HTML5, читай по правилам!'.",
+        example: "<!DOCTYPE html>",
+        missionLevel: 0
+      },
+      {
+        tag: "<html> ... </html>",
+        name: "Главный дом страницы",
+        icon: "🏛️",
+        type: "HTML",
+        analogy: "Самый главный внешний тег. Открывает дверь сайта в самом начале и закрывает в самом конце.",
+        example: "<html lang='ru'>\n  ...\n</html>",
+        missionLevel: 0
+      },
+      {
+        tag: "<head> ... </head>",
+        name: "Мозг и настройки сайта",
+        icon: "🧠",
+        type: "HTML",
+        analogy: "Скрытый пульт управления. Человек не видит его на странице, но там лежат название вкладки <title> и стили.",
+        example: "<head>\n  <title>Имя сайта</title>\n</head>",
+        missionLevel: 0
+      },
+      {
+        tag: "<body> ... </body>",
+        name: "Тело сайта (Видимая часть)",
+        icon: "🧍",
+        type: "HTML",
+        analogy: "Всё, что человек видит глазами на экране iPad (заголовки, фото, кнопки), живет строго внутри <body>.",
+        example: "<body>\n  <h1>Привет!</h1>\n</body>",
+        missionLevel: 0
+      },
+      {
+        tag: "<h1> ... </h1>",
+        name: "Главный Заголовок-Великан",
+        icon: "📢",
+        type: "HTML",
+        analogy: "Как громкий мегафон командира штаба! Делает текст самым крупным и заметным на странице.",
+        example: "<h1>🚨 Секретная База Агента</h1>",
+        missionLevel: 1
+      },
+      {
+        tag: "<p> ... </p>",
+        name: "Параграф обычного текста",
+        icon: "📝",
+        type: "HTML",
+        analogy: "Обычный разговор по рации или абзац в книге. В него заворачивают предложения и рассказы.",
+        example: "<p>Привет! Я изучаю настоящий веб-код.</p>",
+        missionLevel: 1
+      },
+      {
+        tag: "<b> ... </b>",
+        name: "Жирный шрифт (Броня слова)",
+        icon: "💪",
+        type: "HTML",
+        analogy: "Надевает на слово тяжелую броню, делая его толстым и ярким. Идеально для имен и паролей.",
+        example: "Позывной агента: <b>Алекс</b>",
+        missionLevel: 1
+      },
+      {
+        tag: "<i> ... </i>",
+        name: "Курсив (Шпионский шепот)",
+        icon: "🕵️",
+        type: "HTML",
+        analogy: "Наклоняет буквы вбок, словно агент шепчет секретную информацию или указывает статус.",
+        example: "Статус миссии: <i>Совершенно секретно</i>",
+        missionLevel: 1
+      },
+      {
+        tag: "<h2>, <h3>",
+        name: "Заголовки-помощники",
+        icon: "📣",
+        type: "HTML",
+        analogy: "Заголовки среднего размера — для названия комнат на базе или разделов сайта.",
+        example: "<h2>Штабной отсек</h2>\n<h3>Склад гаджетов</h3>",
+        missionLevel: 2
+      },
+      {
+        tag: "<ul> и <li>",
+        name: "Список снаряжения с точками",
+        icon: "📋",
+        type: "HTML",
+        analogy: "<ul> — это папка для списка, а каждый <li> — отдельный пункт снаряжения с круглой точкой.",
+        example: "<ul>\n  <li>🕶️ Очки ночного видения</li>\n  <li>🍕 Запасная пицца</li>\n</ul>",
+        missionLevel: 2
+      },
+      {
+        tag: "<img src='...' width='...'>",
+        name: "Фотография-одиночка",
+        icon: "🖼️",
+        type: "HTML",
+        analogy: "Особенный тег без закрывающей половинки! Адрес фото пишется в src, а ширина в width.",
+        example: "<img src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400' width='250'>",
+        missionLevel: 3
+      },
+      {
+        tag: "<a href='...'> ... </a>",
+        name: "Портал-Телепорт (Ссылка)",
+        icon: "🌀",
+        type: "HTML",
+        analogy: "Превращает любое слово в волшебную дверь на другой сайт по адресу из href.",
+        example: "<a href='https://wikipedia.org' target='_blank'>🌐 Открыть портал</a>",
+        missionLevel: 3
+      },
+      {
+        tag: "<style> ... </style>",
+        name: "Сундук с красками CSS",
+        icon: "🎨",
+        type: "CSS",
+        analogy: "Волшебная мастерская внутри страницы, где мы пишем команды для раскраски текста и комнат.",
+        example: "<style>\n  body { background-color: #f0fdf4; color: #166534; }\n</style>",
+        missionLevel: 4
+      },
+      {
+        tag: "border-radius: 20px;",
+        name: "Круглые мягкие углы",
+        icon: "⭕",
+        type: "CSS",
+        analogy: "Спиливает острые углы у картинок и карточек, делая их мягкими и круглыми как кнопки пульта.",
+        example: "img { border-radius: 25px; }",
+        missionLevel: 4
+      },
+      {
+        tag: "<button> ... </button>",
+        name: "Интерактивная кнопка",
+        icon: "🕹️",
+        type: "HTML",
+        analogy: "Настоящая кнопка управления, которую можно нажимать мышкой на экране.",
+        example: "<button onclick='alert(\"Сигнал принят!\")'>Нажми меня</button>",
+        missionLevel: 5
+      },
+      {
+        tag: ":hover",
+        name: "Магия прикосновения курсора",
+        icon: "🪄",
+        type: "CSS",
+        analogy: "Команда, которая заставляет кнопку менять цвет или увеличиваться, когда к ней подлетает мышка!",
+        example: "button:hover { background: #f43f5e; transform: scale(1.1); }",
+        missionLevel: 5
+      }
+    ];
+
+    // -------------------------------------------------------------
+    // MISSIONS DATA: PURE SCRATCH TYPING (NO PRE-FILLED CODE!)
+    // -------------------------------------------------------------
+    const MISSIONS = [
+      {
+        id: 0,
+        title: "Дело №0: Чертёж сайта (Анатомия HTML)",
+        badge: "Архитектор Схем 🏛️",
+        minXp: 0,
+        rewardXp: 160,
+        story: "Каждый секретный агент перед выездом на миссию изучает чертёж базы! Познакомься со структурой сайта: DOCTYPE, HTML, HEAD и BODY. Первые строки не нужно писать самому — они служат для ознакомления!",
+        steps: [
+          {
+            stepId: "0-1",
+            stepName: "Шаг 1: <!DOCTYPE html> Паспорт",
+            icon: "📜",
+            tag: "<!DOCTYPE>",
+            headline: "Только для ознакомления: Паспорт <!DOCTYPE html>",
+            explanation: "Посмотри на серую строчку вверху редактора (она подсвечена жёлтым). <b>&lt;!DOCTYPE html&gt;</b> — это официальный паспорт страницы! Он сообщает браузеру: <i>'Перед тобой современный сайт на HTML5'</i>.<br><br>💡 <b>Писать этот тег самому не нужно!</b> Он уже заложен в каркас страницы. Просто изучи подсказку и нажми кнопку 'Проверить'!",
+            formula: "<!DOCTYPE html> (Ознакомление)",
+            starterCode: "",
+            isIntroOnly: true,
+            tasks: [
+              { 
+                id: "0-1-1", 
+                text: "Познакомься с паспортом сайта <!DOCTYPE html> и нажми 'Проверить' (+40 XP)", 
+                xp: 40, 
+                check: () => true 
+              }
+            ]
+          },
+          {
+            stepId: "0-2",
+            stepName: "Шаг 2: <html> Дом",
+            icon: "🏛️",
+            tag: "<html>",
+            headline: "Только для ознакомления: Дом страницы <html lang='ru'>",
+            explanation: "Тег <b>&lt;html&gt;</b> открывает входную дверь в самом начале сайта, а <b>&lt;/html&gt;</b> запирает её в самом конце. Всё, что есть на странице, живет внутри этих стен! А параметр <code>lang='ru'</code> подсказывает, что сайт на русском языке.<br><br>💡 <b>Писать этот тег самому не нужно!</b> Это каркас дома, в котором будет жить твой код.",
+            formula: "<html lang='ru'> ... </html> (Ознакомление)",
+            starterCode: "",
+            isIntroOnly: true,
+            tasks: [
+              { 
+                id: "0-2-1", 
+                text: "Изучи тег <html lang='ru'> и нажми 'Проверить' (+40 XP)", 
+                xp: 40, 
+                check: () => true 
+              }
+            ]
+          },
+          {
+            stepId: "0-3",
+            stepName: "Шаг 3: <head> Мозг",
+            icon: "🧠",
+            tag: "<head>",
+            headline: "Только для ознакомления: Мозг страницы <head>",
+            explanation: "Блок <b>&lt;head&gt;</b> — это мозг и пульт настроек сайта. Человек не видит его на самой странице, но в нём лежат важные инструкции. Например, тег <code>&lt;title&gt;</code> задает секретное название на вкладке браузера Safari на iPad!<br><br>💡 <b>Писать вручную не нужно</b> — блок настроек уже подключен в сером каркасе выше!",
+            formula: "<head><title>Название вкладки</title></head> (Ознакомление)",
+            starterCode: "",
+            isIntroOnly: true,
+            tasks: [
+              { 
+                id: "0-3-1", 
+                text: "Познакомься с мозгом сайта <head> и нажми 'Проверить' (+40 XP)", 
+                xp: 40, 
+                check: () => true 
+              }
+            ]
+          },
+          {
+            stepId: "0-4",
+            stepName: "Шаг 4: <body> Твоя зона!",
+            icon: "🧍",
+            tag: "<body>",
+            headline: "Шаг 4: Видимое тело сайта <body> — время творить!",
+            explanation: "<b>&lt;body&gt;</b> — это тело сайта! Всё, что посетитель видит своими глазами на iPad (заголовки, текст, картинки, кнопки), живет строго между <code>&lt;body&gt;</code> и <code>&lt;/body&gt;</code>. Твой редактор кода находится прямо внутри него!<br><br>👉 Пора пробовать! Напиши свой первый заголовок <code>&lt;h1&gt;Штаб спецагента&lt;/h1&gt;</code> в поле ниже своими руками:",
+            formula: "<body> Здесь пишется весь твой сайт! </body>",
+            starterCode: "",
+            isIntroOnly: false,
+            tasks: [
+              { 
+                id: "0-4-1", 
+                text: "Напиши заголовок <h1>...</h1> своими руками внутри тела сайта", 
+                xp: 40, 
+                check: (code) => /<h1>\s*[^<>]+\s*<\/h1>/i.test(code) 
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 1,
+        title: "Дело №1: Первые слова шпиона",
+        badge: "Хакер Браузера 🕶️",
+        minXp: 100,
+        rewardXp: 200,
+        story: "Пора писать настоящие теги внутри body своими руками! Поле редактора чистое — напиши открывающий тег, текст и обязательно закрой тег со слэшем.",
+        steps: [
+          {
+            stepId: "1-1",
+            stepName: "Шаг 1: Напиши сам <h1>",
+            icon: "📢",
+            tag: "<h1>",
+            headline: "Шаг 1: Напиши главный заголовок <h1> своими руками!",
+            explanation: "Поле редактора чистое! Напиши открывающий <code>&lt;h1&gt;</code>, своё секретное название, и обязательно закрой <code>&lt;/h1&gt;</code> со слэшем.<br><i>Подсказка: если сложно найти скобки &lt; &gt; на клавиатуре, нажми цветную кнопку '+ &lt;h1&gt;' на панели наклеек!</i>",
+            formula: "<h1>Твой Заголовок</h1>",
+            starterCode: "",
+            tasks: [
+              { 
+                id: "1-1-1", 
+                text: "Напиши открывающий <h1>, текст и закрывающий </h1>", 
+                xp: 50, 
+                check: (code) => /<h1>\s*[^<>]+\s*<\/h1>/i.test(code) 
+              }
+            ]
+          },
+          {
+            stepId: "1-2",
+            stepName: "Шаг 2: Напиши сам <p>",
+            icon: "📝",
+            tag: "<p>",
+            headline: "Шаг 2: Добавь параграф текста тегом <p>",
+            explanation: "Теперь напиши тег параграфа <code>&lt;p&gt;</code>, предложение о себе или своей миссии, и обязательно закрой <code>&lt;/p&gt;</code>.",
+            formula: "<p>Твое сообщение</p>",
+            starterCode: "",
+            tasks: [
+              { 
+                id: "1-2-1", 
+                text: "Напиши тег <p> с текстом и закрой его </p>", 
+                xp: 50, 
+                check: (code) => /<p>\s*[^<>]+\s*<\/p>/i.test(code) 
+              }
+            ]
+          },
+          {
+            stepId: "1-3",
+            stepName: "Шаг 3: Надень броню <b>",
+            icon: "💪",
+            tag: "<b>",
+            headline: "Шаг 3: Выдели важное слово жирным тегом <b>",
+            explanation: "Напиши предложение и оберни кодовое имя в теги <code>&lt;b&gt;Твоё Имя&lt;/b&gt;</code>!",
+            formula: "<p>Агент: <b>Позывной</b></p>",
+            starterCode: "",
+            tasks: [
+              { 
+                id: "1-3-1", 
+                text: "Напиши слово внутри <b> и закрой его </b>", 
+                xp: 50, 
+                check: (code) => /<b>\s*[^<>]+\s*<\/b>/i.test(code) 
+              }
+            ]
+          },
+          {
+            stepId: "1-4",
+            stepName: "Шаг 4: Сделай шепот <i>",
+            icon: "🕵️",
+            tag: "<i>",
+            headline: "Шаг 4: Добавь шпионский наклон тегом <i>",
+            explanation: "Напиши слово наклонным курсивом с помощью тегов <code>&lt;i&gt;Секретно&lt;/i&gt;</code>!",
+            formula: "<p>Статус: <i>Секретно</i></p>",
+            starterCode: "",
+            tasks: [
+              { 
+                id: "1-4-1", 
+                text: "Напиши тег <i> с текстом и закрой его </i>", 
+                xp: 50, 
+                check: (code) => /<i>\s*[^<>]+\s*<\/i>/i.test(code) 
+              }
+            ]
+          },
+          {
+            stepId: "1-5",
+            stepName: "⭐ Сборка Донесения",
+            icon: "🏆",
+            tag: "ФИНАЛ",
+            headline: "Финальная операция: Собери все 4 тега вместе!",
+            explanation: "Напиши полное секретное донесение! В нем должны быть: <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, жирный <code>&lt;b&gt;</code> и курсив <code>&lt;i&gt;</code>.",
+            formula: "<h1> + <p> с <b> и <i>",
+            starterCode: "",
+            tasks: [
+              { 
+                id: "1-5-1", 
+                text: "Напиши донесение со всеми 4 тегами (<h1>, <p>, <b>, <i>)", 
+                xp: 50, 
+                check: (code) => /<h1>/i.test(code) && /<p>/i.test(code) && /<b>/i.test(code) && /<i>/i.test(code) 
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "Дело №2: Скелет и Кирпичики Сайта",
+        badge: "Строитель Веба 🧱",
+        minXp: 250,
+        rewardXp: 200,
+        story: "Построй карточку своего штаба с подзаголовками и списком секретного снаряжения своими руками!",
+        steps: [
+          {
+            stepId: "2-1",
+            stepName: "Шаг 1: Подзаголовок <h2>",
+            icon: "📣",
+            tag: "<h2>",
+            headline: "Напиши подзаголовок <h2> сам",
+            explanation: "Напиши своими руками подзаголовок среднего размера: <code>&lt;h2&gt;Комната связи&lt;/h2&gt;</code>!",
+            formula: "<h2>Название комнаты</h2>",
+            starterCode: "",
+            tasks: [
+              { id: "2-1-1", text: "Напиши тег <h2> с текстом и закрой его </h2>", xp: 60, check: (code) => /<h2>\s*[^<>]+\s*<\/h2>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "2-2",
+            stepName: "Шаг 2: Списки <ul> и <li>",
+            icon: "📋",
+            tag: "<ul>, <li>",
+            headline: "Построй список снаряжения из <ul> и <li>",
+            explanation: "Открой список тегом <code>&lt;ul&gt;</code>, добавь внутрь 3 предмета в <code>&lt;li&gt;Предмет&lt;/li&gt;</code> и закрой <code>&lt;/ul&gt;</code>!",
+            formula: "<ul>\n  <li>Пункт 1</li>\n  <li>Пункт 2</li>\n</ul>",
+            starterCode: "",
+            tasks: [
+              { id: "2-2-1", text: "Напиши тег <ul> и внутри не меньше двух пунктов <li>...</li>", xp: 70, check: (code) => /<ul>[\s\S]*<li>[\s\S]*<\/ul>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "2-3",
+            stepName: "⭐ Сборка Базы",
+            icon: "🏆",
+            tag: "ФИНАЛ",
+            headline: "Сборка полной карточки базы",
+            explanation: "Объедини главное название <code>&lt;h1&gt;</code>, подзаголовок <code>&lt;h2&gt;</code> и список снаряжения <code>&lt;ul&gt;</code>!",
+            formula: "<h1> + <h2> + <ul>",
+            starterCode: "",
+            tasks: [
+              { id: "2-3-1", text: "Напиши базу с <h1>, <h2> и <ul>", xp: 70, check: (code) => /<h1>/i.test(code) && /<h2>/i.test(code) && /<ul>/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "Дело №3: Фотолаборатория и Порталы",
+        badge: "Повелитель Порталов 🌀",
+        minXp: 450,
+        rewardXp: 250,
+        story: "Научись прикреплять фото напарников через <img> и строить порталы-ссылки через <a>.",
+        steps: [
+          {
+            stepId: "3-1",
+            stepName: "Шаг 1: Картинка <img>",
+            icon: "🖼️",
+            tag: "<img>",
+            headline: "Напиши тег картинки <img> с адресом src",
+            explanation: "Напиши тег-одиночку: <code>&lt;img src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400' width='250'&gt;</code>.",
+            formula: "<img src='адрес-картинки' width='250'>",
+            starterCode: "",
+            tasks: [
+              { id: "3-1-1", text: "Напиши тег <img> с адресом src", xp: 80, check: (code) => /<img\s+[^>]*src=[^>]+>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "3-2",
+            stepName: "Шаг 2: Портал <a>",
+            icon: "🌀",
+            tag: "<a>",
+            headline: "Напиши ссылку-портал через тег <a>",
+            explanation: "Напиши ссылку: <code>&lt;a href='https://minecraft.net' target='_blank'&gt;Открыть портал&lt;/a&gt;</code>.",
+            formula: "<a href='https://адрес' target='_blank'>Кликни сюда</a>",
+            starterCode: "",
+            tasks: [
+              { id: "3-2-1", text: "Напиши тег <a href=...> и закрой его </a>", xp: 90, check: (code) => /<a\s+href=[^>]+>[^<]+<\/a>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "3-3",
+            stepName: "⭐ Сборка Фотолаборатории",
+            icon: "🏆",
+            tag: "ФИНАЛ",
+            headline: "Сборка страницы с фото и порталом",
+            explanation: "Помести на страницу фото напарника <code>&lt;img&gt;</code> и ссылку <code>&lt;a&gt;</code>!",
+            formula: "<img> + <a>",
+            starterCode: "",
+            tasks: [
+              { id: "3-3-1", text: "Напиши код с картинкой <img> и ссылкой <a>", xp: 80, check: (code) => /<img/i.test(code) && /<a/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "Дело №4: Магия Цветов и Стиля (CSS)",
+        badge: "Маг Красок 🎨",
+        minXp: 700,
+        rewardXp: 300,
+        story: "Время добавить красок! Подключаем сундук стилей <style> и меняем фон, цвет букв и мягкие углы.",
+        steps: [
+          {
+            stepId: "4-1",
+            stepName: "Шаг 1: Сундук <style> и фон",
+            icon: "🎨",
+            tag: "<style>",
+            headline: "Напиши блок <style> и свойство background-color",
+            explanation: "Напиши тег <code>&lt;style&gt;</code>, задай цвет фона <code>body { background-color: #fef3c7; }</code> и закрой <code>&lt;/style&gt;</code>!",
+            formula: "<style>\n  body { background-color: skyblue; }\n</style>",
+            starterCode: "",
+            tasks: [
+              { id: "4-1-1", text: "Напиши блок <style> со свойством background-color", xp: 100, check: (code) => /<style>[\s\S]*background-color[\s\S]*<\/style>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "4-2",
+            stepName: "Шаг 2: Скругление border-radius",
+            icon: "⭕",
+            tag: "border-radius",
+            headline: "Сделай углы круглыми свойством border-radius",
+            explanation: "Напиши картинку <code>&lt;img&gt;</code> и в стилях задай ей <code>border-radius: 25px;</code>!",
+            formula: "img { border-radius: 25px; }",
+            starterCode: "",
+            tasks: [
+              { id: "4-2-1", text: "Напиши стиль с border-radius для картинки", xp: 100, check: (code) => /border-radius:\s*\d+/i.test(code) }
+            ]
+          },
+          {
+            stepId: "4-3",
+            stepName: "⭐ Сборка Цветного Клуба",
+            icon: "🏆",
+            tag: "ФИНАЛ",
+            headline: "Сборка красочного сайта со стилями",
+            explanation: "Объединяем блок <code>&lt;style&gt;</code>, заголовок <code>&lt;h1&gt;</code> и цветной дизайн!",
+            formula: "<style> + <h1>",
+            starterCode: "",
+            tasks: [
+              { id: "4-3-1", text: "Напиши код с блоком <style> и заголовком <h1>", xp: 100, check: (code) => /<style>/i.test(code) && /<h1>/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 5,
+        title: "Дело №5: Живые Кнопки и Карточки",
+        badge: "Инженер Кнопок 🕹️",
+        minXp: 950,
+        rewardXp: 300,
+        story: "Сайт должен откликаться на действия! Создадим кнопку с событием onclick и эффектом наведения :hover.",
+        steps: [
+          {
+            stepId: "5-1",
+            stepName: "Шаг 1: Напиши кнопку <button>",
+            icon: "🕹️",
+            tag: "<button>",
+            headline: "Напиши кнопку <button> с атрибутом onclick",
+            explanation: "Напиши: <code>&lt;button onclick='alert(\"Код принят!\")'&gt;Нажми меня&lt;/button&gt;</code> своими руками!",
+            formula: "<button onclick='alert(\"Привет!\")'>Кнопка</button>",
+            starterCode: "",
+            tasks: [
+              { id: "5-1-1", text: "Напиши тег <button> с атрибутом onclick", xp: 90, check: (code) => /<button\s+[^>]*onclick=[^>]+>[^<]+<\/button>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "5-2",
+            stepName: "Шаг 2: Магия :hover",
+            icon: "🪄",
+            tag: ":hover",
+            headline: "Оживи кнопку реакцией на мышку button:hover",
+            explanation: "Внутри <code>&lt;style&gt;</code> напиши <code>button:hover { background: #f43f5e; }</code>!",
+            formula: "button:hover { background: red; }",
+            starterCode: "",
+            tasks: [
+              { id: "5-2-1", text: "Напиши псевдокласс button:hover в стилях", xp: 110, check: (code) => /button:hover\s*{[^}]+}/i.test(code) }
+            ]
+          },
+          {
+            stepId: "5-3",
+            stepName: "⭐ Сборка Карточки Агента",
+            icon: "🏆",
+            tag: "ФИНАЛ",
+            headline: "Сборка интерактивной карточки агента",
+            explanation: "Создай карточку и кнопку со спецэффектами!",
+            formula: "<button> + <style>",
+            starterCode: "",
+            tasks: [
+              { id: "5-3-1", text: "Напиши кнопку и стили для нее", xp: 100, check: (code) => /<button/i.test(code) && /<style/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 6,
+        title: "Дело №6: Финальный Босс — Досье Героя",
+        badge: "Архитектор Веба 👑",
+        minXp: 1250,
+        rewardXp: 300,
+        story: "Выпускной экзамен Академии! Напиши карточку своего супергероя и получи Золотой Диплом!",
+        steps: [
+          {
+            stepId: "6-1",
+            stepName: "⭐ Финальный Шедевр",
+            icon: "🏆",
+            tag: "ДИПЛОМ",
+            headline: "Напиши Досье Супергероя с нуля!",
+            explanation: "Собери воедино всё, чему научился: заголовки, фото, стили и победную кнопку!",
+            formula: "HTML + CSS = Шедевр!",
+            starterCode: "",
+            tasks: [
+              { id: "6-1-1", text: "Напиши заголовок <h1> и карточку со стилями <style>", xp: 150, check: (code) => /<h1>/i.test(code) && /<style>/i.test(code) },
+              { id: "6-1-2", text: "Нажми 'Проверить' и открой Золотой Диплом!", xp: 150, check: () => true }
+            ]
+          }
+        ]
+      }
+    ];
+
+    // -------------------------------------------------------------
+    // LOCAL STATE (RESTORED FROM BROWSER STORAGE)
+    // -------------------------------------------------------------
+    let savedMission = parseInt(localStorage.getItem("astro_current_mission") || "0", 10);
+    if (isNaN(savedMission) || !MISSIONS.some(m => m.id === savedMission)) savedMission = 0;
+
+    let savedStep = parseInt(localStorage.getItem("astro_current_step") || "0", 10);
+    const targetMission = MISSIONS.find(m => m.id === savedMission);
+    if (isNaN(savedStep) || savedStep < 0 || (targetMission && savedStep >= targetMission.steps.length)) savedStep = 0;
+
+    let state = {
+      agentName: localStorage.getItem("astro_agent_name") || "Агент 007",
+      avatar: localStorage.getItem("astro_avatar") || "🕵️‍♂️",
+      currentMissionId: savedMission,
+      currentStepIndex: savedStep,
+      xp: parseInt(localStorage.getItem("astro_xp") || "0", 10),
+      completedTasks: JSON.parse(localStorage.getItem("astro_tasks") || "[]"),
+      soundEnabled: localStorage.getItem("astro_sound") !== "false",
+      activeTab: localStorage.getItem("astro_active_tab") || "missions" // "missions" | "tags" | "cert"
+    };
+
+    // Audio Synthesizer
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function playSound(type) {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new AudioContextClass();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (type === 'click') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(320, now + 0.04);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.04);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (type === 'xp') {
+          [523.25, 659.25, 783.99].forEach((f, i) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            o.type = 'sine';
+            o.frequency.setValueAtTime(f, now + i * 0.07);
+            g.gain.setValueAtTime(0.12, now + i * 0.07);
+            g.gain.linearRampToValueAtTime(0.01, now + i * 0.07 + 0.2);
+            o.start(now + i * 0.07);
+            o.stop(now + i * 0.07 + 0.2);
+          });
+        } else if (type === 'win') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            o.type = 'triangle';
+            o.frequency.setValueAtTime(f, now + i * 0.09);
+            g.gain.setValueAtTime(0.15, now + i * 0.09);
+            g.gain.linearRampToValueAtTime(0.01, now + i * 0.09 + 0.3);
+            o.start(now + i * 0.09);
+            o.stop(now + i * 0.09 + 0.3);
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Confetti
+    function launchConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ["#38bdf8", "#10b981", "#f59e0b", "#f43f5e", "#8b5cf6", "#ec4899"];
+
+      for (let i = 0; i < 75; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 14,
+          vy: (Math.random() - 0.7) * 16,
+          size: Math.random() * 8 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          rot: Math.random() * 360,
+          rotSpd: (Math.random() - 0.5) * 8
+        });
+      }
+
+      function step() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = 0;
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.35;
+          p.alpha -= 0.012;
+          p.rot += p.rotSpd;
+          if (p.alpha > 0) {
+            active++;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rot * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            ctx.restore();
+          }
+        });
+        if (active > 0) requestAnimationFrame(step);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Rank Calculation
+    function getRank(xp) {
+      if (xp >= 1500) return { title: "Глава Кибер-Академии 👑", pct: 100 };
+      if (xp >= 1100) return { title: "Секретный Архитектор 🛡️", pct: Math.round((xp / 1500) * 100) };
+      if (xp >= 750)  return { title: "Мастер Порталов 🌀", pct: Math.round((xp / 1500) * 100) };
+      if (xp >= 400)  return { title: "Кибер-Детектив 💻", pct: Math.round((xp / 1500) * 100) };
+      if (xp >= 150)  return { title: "Младший Декодер 🔍", pct: Math.round((xp / 1500) * 100) };
+      return { title: "Стажёр-Шпион 🕶️", pct: Math.round((xp / 1500) * 100) };
+    }
+
+    // Update Header & General UI
+    function updateUI() {
+      const nameInput = document.getElementById("agent-name-input");
+      if (nameInput) nameInput.value = state.agentName;
+
+      const avatarBtn = document.getElementById("agent-avatar");
+      if (avatarBtn) avatarBtn.textContent = state.avatar;
+
+      const rank = getRank(state.xp);
+      const rankEl = document.getElementById("agent-rank");
+      if (rankEl) rankEl.textContent = rank.title;
+
+      const xpNum = document.getElementById("current-xp-num");
+      if (xpNum) xpNum.textContent = state.xp.toString();
+
+      const xpBar = document.getElementById("xp-bar-fill");
+      if (xpBar) xpBar.style.width = Math.min(100, rank.pct) + "%";
+
+      renderSidebar();
+      renderTagsLibrary();
+    }
+
+    // Render Sidebar Cases
+    function renderSidebar() {
+      const sidebar = document.getElementById("missions-list");
+      if (!sidebar) return;
+      sidebar.innerHTML = "";
+
+      MISSIONS.forEach(mission => {
+        const isUnlocked = state.xp >= mission.minXp || mission.id === 0;
+        const allTasks = mission.steps.flatMap(s => s.tasks);
+        const allDone = allTasks.every(t => state.completedTasks.includes(t.id));
+
+        const card = document.createElement("div");
+        card.className = "case-card" + (mission.id === state.currentMissionId && state.activeTab === 'missions' ? " active" : "") + (!isUnlocked ? " locked" : "") + (allDone ? " completed" : "");
+        
+        card.innerHTML = `
+          <div class="case-top">
+            <span class="case-num">ДЕЛО №${mission.id}</span>
+            <span>${allDone ? '✅' : (!isUnlocked ? '🔒' : '🎯')}</span>
+          </div>
+          <div class="case-name">${mission.title}</div>
+          <div class="case-meta">
+            <span>⭐ +${mission.rewardXp} XP</span>
+            <span style="color: #64748b;">${mission.steps.length} шага</span>
+          </div>
+        `;
+
+        if (isUnlocked) {
+          card.onclick = () => {
+            playSound('click');
+            switchToTab('missions');
+            loadMission(mission.id, 0);
+          };
+        }
+        sidebar.appendChild(card);
+      });
+    }
+
+    // Save currently written editor code
+    function saveCurrentCode() {
+      try {
+        const textarea = document.getElementById("code-editor");
+        if (textarea && state.currentMissionId !== undefined && state.currentStepIndex !== undefined) {
+          const key = `astro_code_m_${state.currentMissionId}_s_${state.currentStepIndex}`;
+          localStorage.setItem(key, textarea.value);
+        }
+      } catch (e) {
+        console.warn("Storage save error", e);
+      }
+    }
+
+    // Load Mission & Step
+    function loadMission(id, stepIndex = 0) {
+      saveCurrentCode();
+
+      state.currentMissionId = id;
+      state.currentStepIndex = stepIndex;
+      saveState();
+
+      const mission = MISSIONS.find(m => m.id === id);
+      if (!mission) return;
+
+      const currentStep = mission.steps[stepIndex] || mission.steps[0];
+
+      // Update Header Badge & Titles
+      const badgeEl = document.getElementById("briefing-badge");
+      if (badgeEl) badgeEl.textContent = `ДЕЛО №00${mission.id} // ${mission.badge}`;
+
+      // Update Step Focus Card
+      document.getElementById("step-icon").textContent = currentStep.icon;
+      document.getElementById("step-headline").textContent = currentStep.headline;
+      document.getElementById("step-explanation").innerHTML = currentStep.explanation;
+      document.getElementById("step-formula").textContent = currentStep.formula;
+
+      // Update Safari URL to match mission
+      const urlText = document.getElementById("safari-url-text");
+      if (urlText) urlText.textContent = `agent-net.secret/case-${id}-step-${stepIndex + 1}.html`;
+
+      // Render Step Track Pills
+      renderStepsTrack(mission, stepIndex);
+
+      // Load saved code from localStorage for this mission and step!
+      const savedCodeKey = `astro_code_m_${id}_s_${stepIndex}`;
+      const code = localStorage.getItem(savedCodeKey) || "";
+      
+      const textarea = document.getElementById("code-editor");
+      if (textarea) {
+        textarea.value = code;
+        if (currentStep.isIntroOnly) {
+          textarea.placeholder = "🔍 Пункт только для ознакомления. Писать код не требуется — просто нажми 'Проверить' (+XP)!";
+        } else {
+          textarea.placeholder = "Напиши теги своими руками здесь...";
+        }
+      }
+
+      // Dynamic Skeleton Highlights for Mission 0
+      document.querySelectorAll(".locked-html-skeleton div, .locked-html-skeleton-bottom div").forEach(el => el.classList.remove("skel-active"));
+      if (id === 0) {
+        if (stepIndex === 0) {
+          document.getElementById("skel-doctype")?.classList.add("skel-active");
+        } else if (stepIndex === 1) {
+          document.getElementById("skel-html")?.classList.add("skel-active");
+          document.getElementById("skel-html-end")?.classList.add("skel-active");
+        } else if (stepIndex === 2) {
+          document.getElementById("skel-head")?.classList.add("skel-active");
+        } else if (stepIndex === 3) {
+          document.getElementById("skel-body")?.classList.add("skel-active");
+          document.getElementById("skel-body-end")?.classList.add("skel-active");
+        }
+      }
+
+      renderCurrentStepTasks(currentStep);
+      updatePreview();
+      updateUI();
+    }
+
+    // Render Steps Buttons
+    function renderStepsTrack(mission, activeIndex) {
+      const track = document.getElementById("steps-track");
+      if (!track) return;
+      track.innerHTML = "";
+
+      mission.steps.forEach((step, idx) => {
+        const stepDone = step.tasks.every(t => state.completedTasks.includes(t.id));
+        const btn = document.createElement("button");
+        btn.className = "sticker-pill-mini" + (idx === activeIndex ? " active" : "");
+        btn.style.cssText = idx === activeIndex 
+          ? "background: #2563eb; color: #ffffff; border-color: #1d4ed8; font-weight: 800;"
+          : (stepDone ? "background: #ecfdf5; color: #047857; border-color: #a7f3d0;" : "background: #ffffff;");
+        
+        btn.innerHTML = `${stepDone ? '✅ ' : ''}${step.stepName}`;
+        btn.onclick = () => {
+          playSound('click');
+          loadMission(mission.id, idx);
+        };
+        track.appendChild(btn);
+      });
+    }
+
+    // Render Tasks of the current step
+    function renderCurrentStepTasks(currentStep) {
+      const container = document.getElementById("tasks-container");
+      if (!container) return;
+      container.innerHTML = "";
+
+      currentStep.tasks.forEach(task => {
+        const isDone = state.completedTasks.includes(task.id);
+        const row = document.createElement("div");
+        row.className = "task-row" + (isDone ? " done" : "");
+        row.innerHTML = `
+          <div class="task-left-part">
+            <input type="checkbox" class="task-box-check" ${isDone ? 'checked' : ''} data-id="${task.id}" />
+            <span class="task-label-text">${task.text}</span>
+          </div>
+          <span class="task-xp-pill">+${task.xp} XP</span>
+        `;
+
+        const check = row.querySelector(".task-box-check");
+        check.onchange = (e) => toggleTask(task, e.target.checked);
+        container.appendChild(row);
+      });
+    }
+
+    // Toggle Task & XP
+    function toggleTask(task, checked) {
+      if (checked) {
+        if (!state.completedTasks.includes(task.id)) {
+          state.completedTasks.push(task.id);
+          state.xp += task.xp;
+          playSound('xp');
+          launchConfetti();
+          showModal("🎉 Задание выполнено!", `Отлично сработано! Получено +${task.xp} XP за подвиг:\n"${task.text}"`);
+        }
+      } else {
+        state.completedTasks = state.completedTasks.filter(id => id !== task.id);
+        state.xp = Math.max(0, state.xp - task.xp);
+      }
+      saveState();
+      updateUI();
+      const mission = MISSIONS.find(m => m.id === state.currentMissionId);
+      const currentStep = mission.steps[state.currentStepIndex];
+      renderCurrentStepTasks(currentStep);
+      renderStepsTrack(mission, state.currentStepIndex);
+    }
+
+    // Live Preview inside Scalable Vector iPad
+    function updatePreview() {
+      const textarea = document.getElementById("code-editor");
+      const iframe = document.getElementById("preview-frame");
+      if (!textarea || !iframe) return;
+
+      const code = textarea.value;
+      localStorage.setItem(`astro_code_m_${state.currentMissionId}_s_${state.currentStepIndex}`, code);
+
+      // Real HTML document matching the locked skeleton
+      const fullHtml = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Секретный Штаб Агента</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      color: #0f172a;
+      background-color: #ffffff;
+      line-height: 1.6;
+    }
+    h1 { margin-top: 0; font-size: 28px; }
+  </style>
+</head>
+<body>
+${code}
+</body>
+</html>`;
+
+      iframe.srcdoc = fullHtml;
+    }
+
+    // Temporary toast on iPad screen
+    let toastTimer = null;
+    function showIpadToast(message) {
+      const toast = document.getElementById("ipad-run-toast");
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1400);
+    }
+
+    // Run Code only (renders live directly inside iPad)
+    function runCode() {
+      playSound('click');
+      updatePreview();
+
+      // Animate Safari reload icon
+      const reloadIcon = document.getElementById("safari-reload-btn");
+      if (reloadIcon) {
+        reloadIcon.classList.remove("spinning");
+        void reloadIcon.offsetWidth;
+        reloadIcon.classList.add("spinning");
+      }
+
+      // Screen glow feedback
+      const screen = document.querySelector(".ipad-vector-screen");
+      if (screen) {
+        screen.classList.add("screen-run-flash");
+        setTimeout(() => screen.classList.remove("screen-run-flash"), 450);
+      }
+
+      showIpadToast("🚀 Сайт запущен на iPad!");
+    }
+
+    // Check Code with step validation
+    function checkCode() {
+      playSound('click');
+      updatePreview();
+      
+      const mission = MISSIONS.find(m => m.id === state.currentMissionId);
+      const currentStep = mission.steps[state.currentStepIndex];
+      const textarea = document.getElementById("code-editor");
+      const code = textarea ? textarea.value.trim() : "";
+      
+      let count = 0;
+      let earnedXp = 0;
+
+      currentStep.tasks.forEach(task => {
+        if (!state.completedTasks.includes(task.id)) {
+          if (task.check && task.check(code)) {
+            state.completedTasks.push(task.id);
+            state.xp += task.xp;
+            earnedXp += task.xp;
+            count++;
+          }
+        }
+      });
+
+      if (count > 0) {
+        playSound('win');
+        launchConfetti();
+        showIpadToast(`🌟 Задание выполнено! +${earnedXp} XP`);
+        const modalMessage = currentStep.isIntroOnly
+          ? `Отлично! Ты успешно познакомился с тегом ${currentStep.tag}!\nЗачислено +${earnedXp} XP!\n\nНажми 'Следующий шаг →' внизу, чтобы продолжить изучение чертежа сайта.`
+          : `Шифр проверен! Выполнено заданий: ${count}. Зачислено +${earnedXp} XP!\n\nТвой сайт отобразился на экране iPad! Нажми 'Следующий шаг →' для продолжения.`;
+        showModal("🌟 Отличная работа, агент!", modalMessage);
+        saveState();
+        updateUI();
+        renderCurrentStepTasks(currentStep);
+        renderStepsTrack(mission, state.currentStepIndex);
+      } else {
+        const remaining = currentStep.tasks.filter(t => !state.completedTasks.includes(t.id));
+        if (remaining.length > 0) {
+          showModal("🔍 Проверка задания", `Сайт запущен на iPad! 📱\n\nЧтобы пройти проверку и получить XP:\n👉 ${remaining[0].text}`);
+        } else {
+          showModal("🎉 Этот шаг пройден!", "Все задачи этого шага уже решены! Жми кнопку 'Следующий шаг →' внизу.");
+        }
+      }
+    }
+
+    // Step Navigation
+    function nextStep() {
+      const mission = MISSIONS.find(m => m.id === state.currentMissionId);
+      if (state.currentStepIndex < mission.steps.length - 1) {
+        playSound('click');
+        loadMission(mission.id, state.currentStepIndex + 1);
+      } else {
+        const curIdx = MISSIONS.findIndex(m => m.id === state.currentMissionId);
+        if (curIdx < MISSIONS.length - 1) {
+          const nextM = MISSIONS[curIdx + 1];
+          if (state.xp >= nextM.minXp) {
+            playSound('click');
+            loadMission(nextM.id, 0);
+          } else {
+            showModal("🔒 Следующее дело пока закрыто", `Для открытия дела №${nextM.id} нужно набрать ${nextM.minXp} XP!`);
+          }
+        } else {
+          showModal("🚀 Все дела Академии завершены!", "Поздравляем! Ты прошел весь курс. Открой вкладку '🏆 Диплом' и распечатай свой сертификат!");
+        }
+      }
+    }
+
+    function prevStep() {
+      if (state.currentStepIndex > 0) {
+        playSound('click');
+        loadMission(state.currentMissionId, state.currentStepIndex - 1);
+      }
+    }
+
+    // Quick Tag Helper
+    function insertTag(startTag, endTag = "") {
+      const textarea = document.getElementById("code-editor");
+      if (!textarea) return;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+      const selected = text.substring(start, end);
+
+      const replacement = startTag + selected + endTag;
+      textarea.value = text.substring(0, start) + replacement + text.substring(end);
+
+      textarea.focus();
+      textarea.selectionStart = start + startTag.length;
+      textarea.selectionEnd = start + startTag.length + selected.length;
+
+      saveCurrentCode();
+      playSound('click');
+      updatePreview();
+    }
+
+    // -------------------------------------------------------------
+    // TAGS LIBRARY (СПРАВОЧНИК ТЕГОВ)
+    // -------------------------------------------------------------
+    function renderTagsLibrary() {
+      const grid = document.getElementById("tags-cards-grid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      ALL_TAGS.forEach(item => {
+        const isLearned = state.xp >= item.missionLevel * 150;
+        const card = document.createElement("div");
+        card.style.cssText = `
+          background: #ffffff;
+          border: 1px solid ${isLearned ? '#bfdbfe' : '#e2e8f0'};
+          border-radius: 16px;
+          padding: 18px 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        `;
+
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 24px;">${item.icon}</span>
+              <code style="font-size: 14px; font-weight: 800; color: #1d4ed8; background: #eff6ff; padding: 2px 8px; border-radius: 6px;">${item.tag}</code>
+            </div>
+            <span style="font-size: 11px; font-weight: 800; color: ${isLearned ? '#059669' : '#94a3b8'}; background: ${isLearned ? '#ecfdf5' : '#f1f5f9'}; padding: 3px 8px; border-radius: 12px;">
+              ${isLearned ? 'Изучено ✅' : `Дело №${item.missionLevel}`}
+            </span>
+          </div>
+
+          <div style="font-size: 14px; font-weight: 800; color: #1e293b;">${item.name}</div>
+          <div style="font-size: 13.5px; color: #475569; line-height: 1.5;">${item.analogy}</div>
+
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; font-family: var(--font-mono); font-size: 12px; color: #0f172a; white-space: pre-wrap;">${escapeHtml(item.example)}</div>
+
+          <button class="btn-soft" style="align-self: flex-start; font-size: 12px; padding: 6px 12px;" onclick="copyTagExample('${escapeAttr(item.example)}')">
+            📋 Скопировать пример
+          </button>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function escapeAttr(str) {
+      return str.replace(/'/g, "\\'").replace(/\n/g, "\\n");
+    }
+
+    window.copyTagExample = function(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        playSound('click');
+        showModal("📋 Пример скопирован!", "Код скопирован в буфер обмена. Теперь можешь вставить его в окно редактора!");
+      });
+    };
+
+    // Tab Switching
+    function switchToTab(tab) {
+      state.activeTab = tab;
+      const workspace = document.getElementById("main-workspace");
+      const tagsLib = document.getElementById("tags-library-container");
+      const cert = document.getElementById("certificate-container");
+
+      const navMissions = document.getElementById("nav-missions-btn");
+      const navTags = document.getElementById("nav-tags-btn");
+
+      if (workspace) workspace.style.display = tab === 'missions' ? "grid" : "none";
+      if (tagsLib) tagsLib.style.display = tab === 'tags' ? "flex" : "none";
+      if (cert) cert.style.display = tab === 'cert' ? "flex" : "none";
+
+      if (navMissions) {
+        navMissions.style.borderColor = tab === 'missions' ? "#3b82f6" : "#e2e8f0";
+        navMissions.style.color = tab === 'missions' ? "#1d4ed8" : "#0f172a";
+      }
+      if (navTags) {
+        navTags.style.borderColor = tab === 'tags' ? "#3b82f6" : "#e2e8f0";
+        navTags.style.color = tab === 'tags' ? "#1d4ed8" : "#0f172a";
+      }
+
+      if (tab === 'tags') {
+        renderTagsLibrary();
+      }
+      playSound('click');
+    }
+
+    // Modal
+    function showModal(title, message) {
+      const overlay = document.getElementById("modal-overlay");
+      const titleEl = document.getElementById("modal-title");
+      const bodyEl = document.getElementById("modal-body");
+      if (titleEl) titleEl.textContent = title;
+      if (bodyEl) bodyEl.textContent = message;
+      if (overlay) overlay.classList.add("open");
+    }
+
+    function closeModal() {
+      playSound('click');
+      document.getElementById("modal-overlay")?.classList.remove("open");
+    }
+
+    // Certificate
+    function openDiploma() {
+      playSound('win');
+      launchConfetti();
+      switchToTab('cert');
+
+      const certName = document.getElementById("cert-agent-name");
+      const certScore = document.getElementById("cert-xp-score");
+      const certDate = document.getElementById("cert-date");
+
+      if (certName) certName.textContent = state.agentName.toUpperCase();
+      if (certScore) certScore.textContent = state.xp.toString();
+      if (certDate) certDate.textContent = new Date().toLocaleDateString('ru-RU');
+    }
+
+    // Save & Reset State in Browser Storage
+    function saveState() {
+      try {
+        localStorage.setItem("astro_agent_name", state.agentName);
+        localStorage.setItem("astro_avatar", state.avatar);
+        localStorage.setItem("astro_xp", state.xp.toString());
+        localStorage.setItem("astro_tasks", JSON.stringify(state.completedTasks));
+        localStorage.setItem("astro_current_mission", state.currentMissionId.toString());
+        localStorage.setItem("astro_current_step", state.currentStepIndex.toString());
+        localStorage.setItem("astro_sound", state.soundEnabled ? "true" : "false");
+        localStorage.setItem("astro_active_tab", state.activeTab);
+      } catch (e) {
+        console.warn("Storage save error", e);
+      }
+    }
+
+    function resetGame() {
+      if (confirm("Точно сбросить весь прогресс и начать все дела заново?")) {
+        localStorage.clear();
+        state.agentName = "Агент 007";
+        state.avatar = "🕵️‍♂️";
+        state.xp = 0;
+        state.completedTasks = [];
+        state.currentMissionId = 0;
+        state.currentStepIndex = 0;
+        state.soundEnabled = true;
+        state.activeTab = "missions";
+        saveState();
+        switchToTab('missions');
+        loadMission(0, 0);
+        updateUI();
+        playSound('click');
+      }
+    }
+
+    // Attach Event Listeners
+    function init() {
+      const nameInp = document.getElementById("agent-name-input");
+      const saveName = (e) => {
+        state.agentName = e.target.value.trim() || "Агент 007";
+        saveState();
+      };
+      nameInp?.addEventListener("input", saveName);
+      nameInp?.addEventListener("change", saveName);
+
+      const avatarBtn = document.getElementById("agent-avatar");
+      const avatars = ["🕵️‍♂️", "🥷", "🦸‍♂️", "🐱", "🦁", "🦊", "🚀", "⚡"];
+      avatarBtn?.addEventListener("click", () => {
+        const idx = avatars.indexOf(state.avatar);
+        state.avatar = avatars[(idx + 1) % avatars.length];
+        if (avatarBtn) avatarBtn.textContent = state.avatar;
+        saveState();
+        playSound('click');
+      });
+
+      const soundBtn = document.getElementById("sound-btn");
+      if (soundBtn) {
+        soundBtn.textContent = state.soundEnabled ? "🔊" : "🔇";
+        soundBtn.title = state.soundEnabled ? "Звук: ВКЛ" : "Звук: ВЫКЛ";
+      }
+      soundBtn?.addEventListener("click", () => {
+        state.soundEnabled = !state.soundEnabled;
+        soundBtn.textContent = state.soundEnabled ? "🔊" : "🔇";
+        soundBtn.title = state.soundEnabled ? "Звук: ВКЛ" : "Звук: ВЫКЛ";
+        saveState();
+        playSound('click');
+      });
+
+      document.getElementById("nav-missions-btn")?.addEventListener("click", () => switchToTab('missions'));
+      document.getElementById("nav-tags-btn")?.addEventListener("click", () => switchToTab('tags'));
+      document.getElementById("back-to-missions-btn")?.addEventListener("click", () => switchToTab('missions'));
+      document.getElementById("cert-open-btn")?.addEventListener("click", openDiploma);
+      document.getElementById("close-diploma-btn")?.addEventListener("click", () => switchToTab('missions'));
+      document.getElementById("print-diploma-btn")?.addEventListener("click", () => window.print());
+      document.getElementById("reset-btn")?.addEventListener("click", resetGame);
+
+      document.getElementById("run-code-btn")?.addEventListener("click", runCode);
+      document.getElementById("check-code-btn")?.addEventListener("click", checkCode);
+      document.getElementById("check-tasks-btn")?.addEventListener("click", checkCode);
+      document.getElementById("next-step-btn")?.addEventListener("click", nextStep);
+      document.getElementById("prev-step-btn")?.addEventListener("click", prevStep);
+      document.getElementById("modal-close-btn")?.addEventListener("click", closeModal);
+      document.getElementById("safari-reload-btn")?.addEventListener("click", () => {
+        runCode();
+      });
+
+      document.querySelectorAll(".sticker-pill-mini").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const target = e.currentTarget;
+          const start = target.getAttribute("data-start") || "";
+          const end = target.getAttribute("data-end") || "";
+          insertTag(start, end);
+        });
+      });
+
+      let typingTimer;
+      const editor = document.getElementById("code-editor");
+      editor?.addEventListener("input", () => {
+        saveCurrentCode();
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(updatePreview, 350);
+      });
+
+      // Save on browser tab close / refresh / navigation
+      window.addEventListener("beforeunload", () => {
+        saveCurrentCode();
+        saveState();
+      });
+      window.addEventListener("pagehide", () => {
+        saveCurrentCode();
+        saveState();
+      });
+
+      // Restore exact active mission & step
+      loadMission(state.currentMissionId, state.currentStepIndex);
+      if (state.activeTab && state.activeTab !== 'missions') {
+        switchToTab(state.activeTab);
+      }
+      updateUI();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</Layout>
