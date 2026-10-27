@@ -1,0 +1,2976 @@
+<!DOCTYPE html><html lang="ru"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Академия Веб-Агентов | Интерактивный тренажер HTML + CSS</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️‍♂️</text></svg>"><style>:root {
+  --bg-app: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-muted: #f8fafc;
+  
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+
+  --primary: #2563eb;
+  --primary-light: #eff6ff;
+  --primary-border: #bfdbfe;
+
+  --success: #10b981;
+  --success-light: #ecfdf5;
+  --success-border: #a7f3d0;
+
+  --amber: #f59e0b;
+  --amber-light: #fffbeb;
+  --amber-border: #fde68a;
+
+  --border-light: #e2e8f0;
+  --border-subtle: #edf2f7;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+
+  --font-sans: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Menlo', 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* =========================================================
+   FLEXBOX FROGGY STYLE UNIFIED 2-COLUMN LAYOUT
+   ========================================================= */
+.froggy-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* Left Column: Instructions & Code Editor (Froggy Style) */
+.froggy-left-pane {
+  width: 48%;
+  min-width: 420px;
+  max-width: 680px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-right: 1px solid var(--border-light);
+  overflow-y: auto;
+  padding: 22px 28px;
+  gap: 14px;
+}
+
+/* Top Bar: Brand, Agent Profile, Level Selector & XP */
+.froggy-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.froggy-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #1e3a8a;
+  letter-spacing: -0.3px;
+  user-select: none;
+}
+
+.brand-avatar-badge {
+  font-size: 20px;
+}
+
+.froggy-agent-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 2px 8px;
+}
+
+.agent-mini-avatar {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: transform 0.15s;
+}
+
+.agent-mini-avatar:hover {
+  transform: scale(1.15);
+}
+
+.agent-name-input {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1e293b;
+  width: 80px;
+  outline: none;
+}
+
+.agent-name-input:focus {
+  border-bottom: 1px dashed var(--primary);
+}
+
+/* Level Navigation Selector */
+.froggy-level-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.btn-level-arrow {
+  background: #f1f5f9;
+  border: 1px solid var(--border-light);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-size: 11px;
+  color: #334155;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.btn-level-arrow:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: scale(1.05);
+}
+
+.btn-level-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btn-level-dropdown {
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0f172a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn-level-dropdown:hover {
+  background: #ffffff;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Level Picker Popover */
+.level-picker-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+  padding: 16px;
+  width: 320px;
+  max-height: 420px;
+  overflow-y: auto;
+  z-index: 250;
+  display: none;
+}
+
+.level-picker-popover.open {
+  display: block;
+}
+
+.level-picker-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 6px;
+}
+
+.level-picker-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.level-case-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.level-case-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #334155;
+  display: flex;
+  justify-content: space-between;
+}
+
+.level-pills-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.level-pill-btn {
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.level-pill-btn:hover {
+  background: #ffffff;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.level-pill-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #1d4ed8;
+}
+
+.level-pill-btn.completed {
+  background: #ecfdf5;
+  color: #059669;
+  border-color: #a7f3d0;
+}
+
+/* XP Badge */
+.froggy-xp-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #b45309;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* Instructions Section */
+.froggy-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.froggy-case-tag {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2563eb;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.froggy-step-headline {
+  font-size: 18px;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.3;
+}
+
+.froggy-story-text {
+  font-size: 13.5px;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.froggy-formula-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.froggy-formula-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.formula-label {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.formula-code {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: #1e3a8a;
+}
+
+.froggy-task-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.task-box-icon {
+  font-size: 13px;
+}
+
+/* =========================================================
+   FLEXBOX FROGGY STYLE CODE EDITOR CARD
+   ========================================================= */
+.froggy-editor-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  margin-top: auto;
+  flex: 1;
+  min-height: 260px;
+}
+
+.froggy-editor-body {
+  display: flex;
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.editor-gutter {
+  color: #94a3b8;
+  user-select: none;
+  text-align: right;
+  padding-right: 12px;
+  border-right: 1px solid #e2e8f0;
+  min-width: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-code-pane {
+  flex: 1;
+  padding-left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.code-locked-line {
+  color: #64748b;
+  user-select: none;
+  white-space: pre-wrap;
+  transition: all 0.2s;
+}
+
+.skel-tag-note {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.skel-active {
+  background: #fef3c7;
+  color: #92400e !important;
+  font-weight: 800;
+  border-radius: 4px;
+  padding: 1px 6px;
+  display: inline-block;
+  margin: 1px 0;
+  border-left: 3px solid #f59e0b;
+}
+
+.skel-active .skel-tag-note {
+  color: #b45309;
+  font-weight: 800;
+}
+
+.code-editable-area {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
+  resize: vertical;
+  min-height: 75px;
+  margin: 4px 0;
+  line-height: 1.5;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.15s;
+}
+
+.code-editable-area:focus {
+  background: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Bottom Toolbar inside Editor Card */
+.froggy-editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #ffffff;
+  border-top: 1px solid var(--border-light);
+  gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.froggy-stickers {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.stickers-label-mini {
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-right: 2px;
+}
+
+.sticker-pill-mini {
+  background: #f1f5f9;
+  border: 1px solid var(--border-light);
+  color: #334155;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sticker-pill-mini:hover {
+  background: #ffffff;
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.froggy-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.btn-action-run {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  border: none;
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 800;
+  padding: 14px 26px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-action-run .btn-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.btn-action-run:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, #059669, #047857);
+}
+
+.btn-action-run:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+}
+
+.btn-action-check {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 800;
+  padding: 14px 26px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-action-check .btn-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.btn-action-check:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+}
+
+.btn-action-check:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.btn-action-next {
+  background: linear-gradient(135deg, #e11d48, #be123c);
+  color: #ffffff;
+  border: none;
+  font-family: inherit;
+  font-size: 16.5px;
+  font-weight: 800;
+  padding: 14px 26px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  animation: pulse-next 1.6s infinite ease-in-out;
+}
+
+@keyframes pulse-next {
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35); }
+  50% { transform: scale(1.05); box-shadow: 0 6px 18px rgba(225, 29, 72, 0.5); }
+}
+
+.btn-action-next.visible {
+  display: inline-flex !important;
+}
+
+/* Minimal Footer Links */
+.froggy-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: #64748b;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.froggy-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.froggy-footer-link {
+  color: #64748b;
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 11.5px;
+  transition: color 0.15s;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.froggy-footer-link:hover {
+  color: var(--primary);
+  background: #f1f5f9;
+}
+
+.froggy-save-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: #059669;
+  font-size: 11px;
+}
+
+.save-indicator-dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  display: inline-block;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* =========================================================
+   RIGHT COLUMN: Visual Stage (Pond Simulator Area)
+   ========================================================= */
+.froggy-right-pane {
+  flex: 1;
+  height: 100%;
+  background: linear-gradient(135deg, #e0f2fe 0%, #cbd5e1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 4. 100% VECTOR SCALABLE APPLE iPAD PRO SIMULATOR */
+.ipad-vector-chassis {
+  width: 100%;
+  height: 100%;
+  max-width: 860px;
+  max-height: 640px;
+  background: linear-gradient(135deg, #d8dee9 0%, #cbd5e1 45%, #94a3b8 100%);
+  border-radius: 34px;
+  padding: 3px;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(148, 163, 184, 0.4);
+  display: flex;
+  position: relative;
+}
+
+.ipad-vector-bezel {
+  width: 100%;
+  height: 100%;
+  background: #090d16;
+  border-radius: 31px;
+  padding: 13px 13px 14px 13px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* 3 Sensor dots matching the Apple iPad Pro Mockup */
+.ipad-vector-sensors {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 20;
+}
+
+.camera-lens {
+  width: 5px;
+  height: 5px;
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 50%;
+  box-shadow: inset 0 0 1px #38bdf8;
+}
+
+.sensor-dot {
+  width: 3px;
+  height: 3px;
+  background: #111827;
+  border-radius: 50%;
+}
+
+/* Screen Glass Area */
+.ipad-vector-screen {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.ipad-status-bar {
+  background: #f8fafc;
+  padding: 4px 14px 3px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: #1e293b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.safari-browser-bar {
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.browser-nav-btns {
+  display: flex;
+  gap: 4px;
+  color: #64748b;
+  font-size: 13px;
+  user-select: none;
+}
+
+.safari-url-pill {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 2px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 10.5px;
+  color: #334155;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.safari-reload-icon {
+  color: #64748b;
+  cursor: pointer;
+  font-size: 12px;
+  user-select: none;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.safari-reload-icon:hover {
+  color: var(--primary);
+}
+
+.safari-reload-icon.spinning {
+  animation: spin-reload 0.6s ease-in-out;
+}
+
+@keyframes spin-reload {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.ipad-vector-screen.screen-run-flash {
+  box-shadow: 0 0 0 2px #10b981;
+}
+
+.ipad-run-toast {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.ipad-run-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.live-display-frame-vector {
+  flex: 1;
+  border: none;
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+}
+
+.ios-home-indicator-bar {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 3.5px;
+  background: #cbd5e1;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* =========================================================
+   5. MODAL & CERTIFICATE OVERLAYS
+   ========================================================= */
+.light-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.light-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.light-modal-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--amber-border);
+}
+
+/* =========================================================
+   6. AGENT QUIZ MODAL (ВИКТОРИНА АГЕНТА)
+   ========================================================= */
+.quiz-modal-card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 24px 26px;
+  max-width: 580px;
+  width: 92%;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.25);
+  border: 2px solid #e2e8f0;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 12px;
+}
+
+.quiz-badge-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quiz-badge-pill {
+  font-size: 11px;
+  font-weight: 800;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  width: fit-content;
+}
+
+.quiz-block-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.quiz-close-x {
+  background: #f1f5f9;
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.quiz-close-x:hover {
+  background: #fee2e2;
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+
+.quiz-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.quiz-step-text {
+  font-size: 13px;
+  font-weight: 800;
+  color: #2563eb;
+  white-space: nowrap;
+}
+
+.quiz-progress-track {
+  flex: 1;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.quiz-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #10b981);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.quiz-question-bubble {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+}
+
+.quiz-q-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+
+.quiz-q-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+.quiz-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.quiz-option-btn {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #1e293b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.quiz-option-btn:hover {
+  border-color: #3b82f6;
+  background: #f0f7ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
+}
+
+.quiz-option-btn:active {
+  transform: translateY(1px);
+}
+
+.quiz-opt-letter {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #cbd5e1;
+  transition: all 0.15s;
+}
+
+.quiz-option-btn:hover .quiz-opt-letter {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.quiz-opt-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Results & Review view */
+.quiz-result-hero {
+  text-align: center;
+  padding: 8px 0 14px;
+}
+
+.quiz-result-icon {
+  font-size: 46px;
+  margin-bottom: 6px;
+}
+
+.quiz-result-heading {
+  font-size: 21px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.quiz-result-sub {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0;
+}
+
+.quiz-breakdown-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 14px 0 20px;
+  text-align: left;
+}
+
+.quiz-breakdown-card {
+  border-radius: 14px;
+  padding: 13px 15px;
+  border: 1.5px solid;
+}
+
+.quiz-breakdown-card.card-correct {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.quiz-breakdown-card.card-wrong {
+  background: #fff1f2;
+  border-color: #fca5a5;
+}
+
+.breakdown-top-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.breakdown-q-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.breakdown-badge {
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.badge-correct {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge-wrong {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.breakdown-your-ans {
+  font-size: 13.5px;
+  margin: 4px 0;
+  color: #334155;
+}
+
+.breakdown-correct-ans {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #15803d;
+  margin: 4px 0;
+  background: #e8f9ed;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.breakdown-explanation {
+  font-size: 12.5px;
+  color: #475569;
+  line-height: 1.45;
+  margin-top: 6px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  padding-top: 6px;
+}
+
+.quiz-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: auto;
+  border-top: 1px solid var(--border-light);
+  padding-top: 16px;
+}
+
+.btn-quiz-retry {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-quiz-retry:hover {
+  background: #ffffff;
+  border-color: #94a3b8;
+}
+
+.btn-quiz-continue {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 800;
+  padding: 11px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+  transition: all 0.15s;
+}
+
+.btn-quiz-continue:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.4);
+}
+
+.tags-library-container,
+.certificate-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.tags-library-container.open,
+.certificate-screen.open {
+  display: flex !important;
+}
+
+.diploma-paper {
+  background: #fffdf5;
+  border: 3px solid #d97706;
+  border-radius: 24px;
+  padding: 36px;
+  max-width: 620px;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-primary-gradient {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  transition: all 0.15s;
+}
+
+.btn-soft {
+  background: #f1f5f9;
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-soft:hover {
+  background: #ffffff;
+  color: var(--text-main);
+}
+
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Responsive Stacking for Screens < 960px */
+@media (max-width: 960px) {
+  body {
+    overflow: auto;
+    height: auto;
+  }
+  .froggy-container {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+  .froggy-left-pane {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .froggy-right-pane {
+    width: 100%;
+    min-height: 540px;
+    height: auto;
+  }
+}
+</style></head> <body> <canvas id="confetti-canvas"></canvas>  <main class="froggy-container" id="main-workspace"> <!-- LEFT COLUMN: Instructions, Code Editor & Level Nav --> <div class="froggy-left-pane"> <!-- Top Bar: Brand, Agent Profile, Level Switcher, XP --> <div class="froggy-top-bar"> <div class="froggy-brand"> <span class="brand-avatar-badge">🕵️‍♂️</span> <span class="brand-name">ВЕБ-АГЕНТЫ</span> </div> <!-- Agent Profile Mini Pill --> <div class="froggy-agent-pill"> <button class="agent-mini-avatar" id="agent-avatar" title="Сменить аватар">🕵️‍♂️</button> <input type="text" id="agent-name-input" class="agent-name-input" value="Агент 007" title="Позывной"> </div> <!-- Froggy Level Navigation --> <div class="froggy-level-nav"> <button class="btn-level-arrow" id="prev-level-btn" title="Предыдущий уровень">◄</button> <button class="btn-level-dropdown" id="level-dropdown-btn"> <span id="level-dropdown-text">Уровень 1 из 15</span> <span style="font-size: 10px; color: #64748b;">▼</span> </button> <button class="btn-level-arrow" id="next-level-btn-top" title="Следующий уровень">►</button> <!-- Level Selector Popover (Froggy Style) --> <div class="level-picker-popover" id="level-picker-popover"> <div class="level-picker-title">Карта Миссий Спецагента</div> <div class="level-picker-grid" id="level-picker-grid"> <!-- Dynamically generated levels --> </div> </div> </div> <!-- XP Badge --> <div class="froggy-xp-badge"> <span>⭐</span> <b id="current-xp-num">0</b> <span style="font-size: 11px; color: #b45309;">XP</span> </div> </div> <!-- Instructions / Briefing Section --> <div class="froggy-instructions"> <div class="froggy-case-tag" id="briefing-badge">ДЕЛО №000: Чертёж сайта</div> <h1 class="froggy-step-headline" id="step-headline">Загрузка задания...</h1> <div class="froggy-story-text" id="step-explanation">Объяснение...</div> <!-- Formula & Task Callout --> <div class="froggy-formula-row"> <div class="froggy-formula-box"> <span class="formula-label">Формула тега:</span> <code id="step-formula" class="formula-code">&lt;tag&gt;...&lt;/tag&gt;</code> </div> <div class="froggy-task-box"> <span class="task-box-icon">🎯</span> <span id="task-single-text" class="task-single-text">Напиши тег своими руками</span> </div> </div> </div> <!-- Code Editor Card (Froggy Style with Line Numbers) --> <div class="froggy-editor-card"> <div class="froggy-editor-body"> <!-- Line Numbers Gutter --> <div class="editor-gutter" id="editor-gutter"> <div>1</div> <div>2</div> <div>3</div> <div>4</div> <div>5</div> <div>6</div> <div>7</div> </div> <!-- Code Content Area --> <div class="editor-code-pane"> <!-- Top Skeleton Lines --> <div id="skel-doctype" class="code-locked-line">&lt;!DOCTYPE html&gt; <span class="skel-tag-note">← Паспорт сайта</span></div> <div id="skel-html" class="code-locked-line">&lt;html lang="ru"&gt; <span class="skel-tag-note">← Стены дома</span></div> <div id="skel-head" class="code-locked-line">&nbsp;&nbsp;&lt;head&gt;&lt;title&gt;Секретный Штаб&lt;/title&gt;&lt;/head&gt;</div> <div id="skel-body" class="code-locked-line">&nbsp;&nbsp;&lt;body&gt; <span class="skel-tag-note" style="color: #059669; font-weight: bold;">← Твоя зона! Пиши свои теги здесь:</span></div> <!-- Editable Code Zone --> <textarea id="code-editor" class="code-editable-area" spellcheck="false" placeholder="Напиши теги своими руками здесь..."></textarea> <!-- Bottom Skeleton Lines --> <div id="skel-body-end" class="code-locked-line">&nbsp;&nbsp;&lt;/body&gt; <span class="skel-tag-note">← Конец body</span></div> <div id="skel-html-end" class="code-locked-line">&lt;/html&gt; <span class="skel-tag-note">← Замок дома</span></div> </div> </div> <!-- Bottom Toolbar inside Editor Card (Froggy Action Bar) --> <div class="froggy-editor-actions"> <!-- Quick Stickers Toolbar --> <div class="froggy-stickers"> <span class="stickers-label-mini">Шпаргалка:</span> <button class="sticker-pill-mini" data-start="<h1>" data-end="</h1>">+ &lt;h1&gt;</button> <button class="sticker-pill-mini" data-start="<p>" data-end="</p>">+ &lt;p&gt;</button> <button class="sticker-pill-mini" data-start="<b>" data-end="</b>">+ &lt;b&gt;</button> <button class="sticker-pill-mini" data-start="<i>" data-end="</i>">+ &lt;i&gt;</button> <button class="sticker-pill-mini" data-start="<ul>
+  <li>" data-end="</li>
+</ul>">+ &lt;ul&gt;</button> <button class="sticker-pill-mini" data-start="<img src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400' width='240'>" data-end="">+ &lt;img&gt;</button> <button class="sticker-pill-mini" data-start="<a href='https://wikipedia.org' target='_blank'>" data-end="</a>">+ &lt;a&gt;</button> <button class="sticker-pill-mini" data-start="<button class='fun-btn' onclick='alert(&quot;Код принят!&quot;)'>" data-end="</button>">+ &lt;button&gt;</button> <button class="sticker-pill-mini" data-start="<style>
+  body { background: #f0fdf4; color: #166534; }
+</style>
+" data-end="">+ &lt;style&gt;</button> </div> <!-- Froggy Action Buttons --> <div class="froggy-action-buttons"> <button class="btn-action-run" id="run-code-btn" title="Запустить код на планшете iPad"> <span class="btn-icon">▶</span> <span>Запустить</span> </button> <button class="btn-action-check" id="check-code-btn" title="Проверить задание и получить XP"> <span class="btn-icon">✓</span> <span>Проверить</span> </button> <button class="btn-action-next" id="next-level-btn" title="Следующий уровень"> <span>Дальше →</span> </button> </div> </div> </div> <!-- Minimal Footer (Links & Stats) --> <div class="froggy-footer"> <div class="froggy-footer-links"> <button class="froggy-footer-link" id="footer-quiz-btn" title="Проверить знания по этому блоку">🎯 Викторина блока</button> <button class="froggy-footer-link" id="footer-tags-btn">📖 Книга Тегов</button> <button class="froggy-footer-link" id="footer-cert-btn">🏆 Золотой Диплом</button> <button class="froggy-footer-link" id="sound-btn" title="Звук: ВКЛ">🔊 Звук: ВКЛ</button> <button class="froggy-footer-link" id="reset-btn" title="Сбросить весь прогресс">🔄 Начать заново</button> </div> <div class="froggy-save-status"> <span class="save-indicator-dot"></span> <span>💾 Автосохранение</span> </div> </div> </div> <!-- RIGHT COLUMN: Visual Stage (Pond Simulator Area) --> <div class="froggy-right-pane"> <!-- 100% Vector Scalable Apple iPad Pro Simulator --> <div class="ipad-vector-chassis"> <div class="ipad-vector-bezel"> <!-- Apple Face ID & Camera Sensor Bar --> <div class="ipad-vector-sensors"> <span class="sensor-dot"></span> <span class="camera-lens"></span> <span class="sensor-dot"></span> </div> <!-- iPad Glass Display Area --> <div class="ipad-vector-screen"> <!-- iOS Status Bar --> <div class="ipad-status-bar"> <span>9:41 AM</span> <span style="font-weight: 800; color: #2563eb;">iPad Спецагента</span> <span>100% 🔋</span> </div> <!-- Safari Browser Bar --> <div class="safari-browser-bar"> <div class="browser-nav-btns"> <span>‹</span> <span>›</span> </div> <div class="safari-url-pill"> <span>🔒</span> <span id="safari-url-text">agent-net.secret/level-1.html</span> </div> <div class="safari-reload-icon" id="safari-reload-btn" title="Обновить сайт">
+🔄
+</div> </div> <!-- Live Website Frame inside iPad --> <iframe id="preview-frame" class="live-display-frame-vector"></iframe> <!-- Floating Run Notification Toast on iPad --> <div id="ipad-run-toast" class="ipad-run-toast">🚀 Сайт запущен на iPad</div> <!-- iOS Bottom Home Indicator Bar --> <div class="ios-home-indicator-bar"></div> </div> </div> </div> </div> </main> <div class="tags-library-container" id="tags-library-container" style="display: none; flex: 1; padding: 24px 32px; background: #f8fafc; overflow-y: auto;"> <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;"> <!-- Header of Library --> <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 24px 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;"> <div> <div style="display: inline-block; background: #eff6ff; color: #1d4ed8; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 800; margin-bottom: 6px;">
+БАЗА ЗНАНИЙ АГЕНТСТВА
+</div> <h2 style="font-size: 24px; font-weight: 900; color: #0f172a;">📖 Секретная Книга Тегов</h2> <p style="color: #64748b; font-size: 14.5px;">Все кирпичики HTML и краски CSS, которые ты открываешь в ходе миссий!</p> </div> <button class="btn-primary-gradient" id="back-to-missions-btn">← Вернуться к миссиям</button> </div> <!-- Tags Grid --> <div id="tags-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;"> <!-- Dynamic tag cards will be loaded here --> </div> </div> </div> <div class="certificate-screen" id="certificate-container"> <div class="diploma-paper"> <div style="font-size: 56px; margin-bottom: 8px;">🏆</div> <div style="display: inline-block; background: #fef3c7; color: #92400e; padding: 4px 16px; border-radius: 20px; font-weight: 800; font-size: 12px; margin-bottom: 12px; border: 1px solid #fde68a;">
+ОФИЦИАЛЬНЫЙ ДОКУМЕНТ ВЕБ-АКАДЕМИИ
+</div> <h2 style="font-size: 28px; font-weight: 900; color: #78350f; letter-spacing: 1px; margin-bottom: 6px;">
+ДИПЛОМ СЕКРЕТНОГО ВЕБ-АГЕНТА
+</h2> <p style="font-size: 15px; color: #64748b; margin-bottom: 20px;">
+Настоящим подтверждается, что отважный исследователь цифровых миров
+</p> <div id="cert-agent-name" style="font-size: 32px; font-weight: 900; color: #1d4ed8; text-decoration: underline; margin-bottom: 16px;">
+АГЕНТ 007
+</div> <p style="font-size: 15px; color: #334155; line-height: 1.6; max-width: 500px; margin: 0 auto 24px;">
+Успешно освоил каркасы сайтов на <b>HTML</b>, суперстили на <b>CSS</b>, прошел 6 секретных миссий и набрал
+<b style="color: #d97706;"><span id="cert-xp-score">1500</span> XP</b>!
+</p> <div style="display: flex; justify-content: space-around; margin-bottom: 30px; font-size: 13px; color: #475569; border-top: 1px dashed #cbd5e1; border-bottom: 1px dashed #cbd5e1; padding: 14px 0;"> <div> <b>Дата присвоения звания:</b><br> <span id="cert-date">27.10.2026</span> </div> <div> <b>Присвоенный ранг:</b><br> <span style="color: #059669; font-weight: 800;">Архитектор Веба 1-й степени ⭐</span> </div> </div> <div style="display: flex; gap: 12px; justify-content: center;"> <button class="btn-primary-gradient" id="print-diploma-btn">🖨️ Распечатать диплом</button> <button class="btn-soft" id="close-diploma-btn">← Вернуться к делам</button> </div> </div> </div> <div class="light-modal-overlay" id="modal-overlay"> <div class="light-modal-card"> <div style="font-size: 50px; margin-bottom: 10px;" id="modal-icon">🎉</div> <h3 style="font-size: 22px; font-weight: 800; color: #1e3a8a; margin-bottom: 8px;" id="modal-title">Подвиг совершен!</h3> <p style="font-size: 15px; color: #475569; line-height: 1.6; margin-bottom: 22px;" id="modal-body">Отличная работа!</p> <button class="btn-primary-gradient" style="margin: 0 auto;" id="modal-close-btn">Продолжить миссию 🚀</button> </div> </div> <div class="light-modal-overlay" id="quiz-modal-overlay"> <div class="quiz-modal-card"> <!-- Top Header --> <div class="quiz-modal-header"> <div class="quiz-badge-wrap"> <span class="quiz-badge-pill" id="quiz-badge">🎯 ВИКТОРИНА АГЕНТА</span> <h3 class="quiz-block-title" id="quiz-block-title">Дело №0: Чертёж сайта</h3> </div> <button class="quiz-close-x" id="quiz-close-x" title="Закрыть">✕</button> </div> <!-- Active Question View --> <div id="quiz-question-view" class="quiz-view-active"> <div class="quiz-progress-row"> <span class="quiz-step-text" id="quiz-step-text">Вопрос 1 из 3</span> <div class="quiz-progress-track"> <div class="quiz-progress-bar" id="quiz-progress-fill" style="width: 33%;"></div> </div> </div> <div class="quiz-question-bubble"> <div class="quiz-q-num" id="quiz-q-num">Вопрос 1:</div> <div class="quiz-q-title" id="quiz-q-title">Какой тег сообщает браузеру, что документ написан на HTML5?</div> </div> <div class="quiz-options-grid" id="quiz-options-list"> <!-- Rendered dynamically --> </div> </div> <!-- Results & Corrections View --> <div id="quiz-result-view" style="display: none;"> <div class="quiz-result-hero"> <div class="quiz-result-icon" id="quiz-result-icon">🏆</div> <h4 class="quiz-result-heading" id="quiz-result-heading">Отличная работа!</h4> <p class="quiz-result-sub" id="quiz-result-score">Правильных ответов: 3 из 3</p> </div> <div class="quiz-breakdown-container" id="quiz-breakdown-list"> <!-- Questions review breakdown rendered dynamically --> </div> <div class="quiz-footer-actions"> <button class="btn-quiz-retry" id="quiz-retry-btn">🔄 Пройти заново</button> <button class="btn-quiz-continue" id="quiz-continue-btn">Продолжить путь 🚀</button> </div> </div> </div> </div> <script>
+    // -------------------------------------------------------------
+    // TAGS ENCYCLOPEDIA (КНИГА ТЕГОВ)
+    // -------------------------------------------------------------
+    const ALL_TAGS = [
+      {
+        tag: "<!DOCTYPE html>",
+        name: "Паспорт документа",
+        icon: "📜",
+        type: "HTML",
+        analogy: "Официальный паспорт страницы. Говорит браузеру: 'Это современный сайт на HTML5, читай по правилам!'.",
+        example: "<!DOCTYPE html>",
+        missionLevel: 0
+      },
+      {
+        tag: "<html> ... </html>",
+        name: "Главный дом страницы",
+        icon: "🏛️",
+        type: "HTML",
+        analogy: "Самый главный внешний тег. Открывает дверь сайта в самом начале и закрывает в самом конце.",
+        example: "<html lang='ru'>\n  ...\n</html>",
+        missionLevel: 0
+      },
+      {
+        tag: "<head> ... </head>",
+        name: "Мозг и настройки сайта",
+        icon: "🧠",
+        type: "HTML",
+        analogy: "Скрытый пульт управления. Человек не видит его на странице, но там лежат название вкладки <title> и стили.",
+        example: "<head>\n  <title>Имя сайта</title>\n</head>",
+        missionLevel: 0
+      },
+      {
+        tag: "<body> ... </body>",
+        name: "Тело сайта (Видимая часть)",
+        icon: "🧍",
+        type: "HTML",
+        analogy: "Всё, что человек видит глазами на экране iPad (заголовки, фото, кнопки), живет строго внутри <body>.",
+        example: "<body>\n  <h1>Привет!</h1>\n</body>",
+        missionLevel: 0
+      },
+      {
+        tag: "<h1> ... </h1>",
+        name: "Главный заголовок",
+        icon: "📢",
+        type: "HTML",
+        analogy: "Самый громкий рупор страницы. Называй им штаб, базу или секретную операцию.",
+        example: "<h1>Секретный Штаб Агента</h1>",
+        missionLevel: 1
+      },
+      {
+        tag: "<p> ... </p>",
+        name: "Параграф (Абзац текста)",
+        icon: "📄",
+        type: "HTML",
+        analogy: "Обычная строчка текста или абзац в донесении агента.",
+        example: "<p>Агент вышел на связь. Задание принято!</p>",
+        missionLevel: 1
+      },
+      {
+        tag: "<b> ... </b>",
+        name: "Жирный шрифт",
+        icon: "🛡️",
+        type: "HTML",
+        analogy: "Бронежилет для букв. Делает слово жирным и заметным.",
+        example: "<b>Особо секретно</b>",
+        missionLevel: 2
+      },
+      {
+        tag: "<i> ... </i>",
+        name: "Курсивный шрифт",
+        icon: "🕶️",
+        type: "HTML",
+        analogy: "Маскировочный халат для букв. Наклоняет текст вправо для шепота или цитат.",
+        example: "<i>Пароль принят</i>",
+        missionLevel: 2
+      },
+      {
+        tag: "<ul> ... </ul>",
+        name: "Маркированный список",
+        icon: "🎒",
+        type: "HTML",
+        analogy: "Секретный рюкзак агента, в котором лежат разные предметы.",
+        example: "<ul>\n  <li>Шпионские часы</li>\n</ul>",
+        missionLevel: 3
+      },
+      {
+        tag: "<li> ... </li>",
+        name: "Элемент списка",
+        icon: "🔹",
+        type: "HTML",
+        analogy: "Один конкретный предмет внутри рюкзака <ul>.",
+        example: "<li>Фонарик</li>",
+        missionLevel: 3
+      },
+      {
+        tag: "<img>",
+        name: "Изображение (Фото)",
+        icon: "📸",
+        type: "HTML",
+        analogy: "Фотоаппарат спецагента. Тег-одиночка, закрывать слэшем не нужно!",
+        example: "<img src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400' width='200'>",
+        missionLevel: 4
+      },
+      {
+        tag: "<a> ... </a>",
+        name: "Гиперссылка (Портал)",
+        icon: "🌀",
+        type: "HTML",
+        analogy: "Портал телепортации на другую страницу или секретную базу.",
+        example: "<a href='https://wikipedia.org'>Перейти в архив</a>",
+        missionLevel: 4
+      },
+      {
+        tag: "<style> ... </style>",
+        name: "Магия стилей CSS",
+        icon: "🎨",
+        type: "CSS",
+        analogy: "Кисти и краски сайта. Меняют фон страницы, цвета букв и размеры.",
+        example: "<style>\n  body { background: #eff6ff; color: #1e3a8a; }\n</style>",
+        missionLevel: 5
+      },
+      {
+        tag: "<button> ... </button>",
+        name: "Интерактивная кнопка",
+        icon: "🚨",
+        type: "HTML",
+        analogy: "Настоящая кнопка управления, которую можно нажимать мышкой на экране.",
+        example: "<button onclick='alert(\"Сигнал принят!\")'>Нажми меня</button>",
+        missionLevel: 5
+      }
+    ];
+
+    // -------------------------------------------------------------
+    // MISSIONS DATA (CASES 0 to 6)
+    // -------------------------------------------------------------
+    const MISSIONS = [
+      {
+        id: 0,
+        title: "Чертёж сайта (Анатомия HTML)",
+        badge: "Архитектор Схем 🏛️",
+        minXp: 0,
+        steps: [
+          {
+            stepId: "0-1",
+            stepName: "Паспорт <!DOCTYPE>",
+            tag: "<!DOCTYPE>",
+            headline: "Только для ознакомления: Паспорт <!DOCTYPE html>",
+            explanation: "Посмотри на самую первую строчку в редакторе (она подсвечена жёлтым). <b>&lt;!DOCTYPE html&gt;</b> — это официальный паспорт страницы! Он сообщает браузеру: <i>'Перед тобой современный сайт на HTML5'</i>.<br><br>💡 <b>Писать этот тег самому не нужно!</b> Он уже заложен в каркас страницы. Просто изучи подсказку и нажми кнопку 'Проверить'!",
+            formula: "<!DOCTYPE html> (Ознакомление)",
+            isIntroOnly: true,
+            tasks: [
+              { id: "0-1-1", text: "Познакомься с паспортом сайта <!DOCTYPE html> и нажми 'Проверить' (+40 XP)", xp: 40, check: () => true }
+            ]
+          },
+          {
+            stepId: "0-2",
+            stepName: "Дом <html>",
+            tag: "<html>",
+            headline: "Только для ознакомления: Дом страницы <html lang='ru'>",
+            explanation: "Тег <b>&lt;html&gt;</b> открывает входную дверь в самом начале сайта, а <b>&lt;/html&gt;</b> запирает её в самом конце. Всё, что есть на странице, живет внутри этих стен! А параметр <code>lang='ru'</code> подсказывает, что сайт на русском языке.<br><br>💡 <b>Писать этот тег самому не нужно!</b> Это каркас дома, в котором будет жить твой код.",
+            formula: "<html lang='ru'> ... </html> (Ознакомление)",
+            isIntroOnly: true,
+            tasks: [
+              { id: "0-2-1", text: "Изучи тег <html lang='ru'> и нажми 'Проверить' (+40 XP)", xp: 40, check: () => true }
+            ]
+          },
+          {
+            stepId: "0-3",
+            stepName: "Мозг <head>",
+            tag: "<head>",
+            headline: "Только для ознакомления: Мозг страницы <head>",
+            explanation: "Блок <b>&lt;head&gt;</b> — это мозг и пульт настроек сайта. Человек не видит его на самой странице, но в нём лежат важные инструкции. Например, тег <code>&lt;title&gt;</code> задает секретное название на вкладке браузера Safari на iPad!<br><br>💡 <b>Писать вручную не нужно</b> — блок настроек уже подключен в сером каркасе выше!",
+            formula: "<head><title>Название вкладки</title></head> (Ознакомление)",
+            isIntroOnly: true,
+            tasks: [
+              { id: "0-3-1", text: "Познакомься с мозгом сайта <head> и нажми 'Проверить' (+40 XP)", xp: 40, check: () => true }
+            ]
+          },
+          {
+            stepId: "0-4",
+            stepName: "Тело <body>",
+            tag: "<body>",
+            headline: "Шаг 4: Видимое тело сайта <body> — время творить!",
+            explanation: "<b>&lt;body&gt;</b> — это тело сайта! Всё, что посетитель видит своими глазами на iPad (заголовки, текст, картинки, кнопки), живет строго между <code>&lt;body&gt;</code> и <code>&lt;/body&gt;</code>. Твой редактор кода находится прямо внутри него!<br><br>👉 Пора пробовать! Напиши свой первый заголовок <code>&lt;h1&gt;Штаб спецагента&lt;/h1&gt;</code> в поле редактора своими руками:",
+            formula: "<body> Здесь пишется весь твой сайт! </body>",
+            isIntroOnly: false,
+            tasks: [
+              { id: "0-4-1", text: "Напиши заголовок <h1>...</h1> своими руками внутри тела сайта", xp: 40, check: (code) => /<h1>\s*[^<>]+\s*<\/h1>/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 1,
+        title: "Первые слова шпиона",
+        badge: "Хакер Браузера 🕶️",
+        minXp: 100,
+        steps: [
+          {
+            stepId: "1-1",
+            stepName: "Заголовок <h1>",
+            tag: "<h1>",
+            headline: "Секретный заголовок: Напиши главный тег <h1>",
+            explanation: "Тег <b>&lt;h1&gt;</b> — это главный заголовок страницы. Он делает текст крупным и важным. Напиши открывающий тег <code>&lt;h1&gt;</code>, затем название штаба, и обязательно закрой тег: <code>&lt;/h1&gt;</code>.",
+            formula: "<h1>Текст заголовка</h1>",
+            tasks: [
+              { id: "1-1-1", text: "Напиши заголовок первого уровня <h1>...</h1> своими руками", xp: 50, check: (code) => /<h1>\s*[^<>]+\s*<\/h1>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "1-2",
+            stepName: "Абзац <p>",
+            tag: "<p>",
+            headline: "Текст донесения: Напиши абзац с тегом <p>",
+            explanation: "Отлично! Теперь добавим текст самого сообщения. Для обычного текста используется тег параграфа: <b>&lt;p&gt;...&lt;/p&gt;</b>.",
+            formula: "<p>Текст параграфа</p>",
+            tasks: [
+              { id: "1-2-1", text: "Добавь параграф <p> под заголовком и проверь результат", xp: 50, check: (code) => /<p>\s*[^<>]+\s*<\/p>/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "Маскировка текста",
+        badge: "Мастер Шифров 🛡️",
+        minXp: 200,
+        steps: [
+          {
+            stepId: "2-1",
+            stepName: "Бронежилет <b>",
+            tag: "<b>",
+            headline: "Жирный бронежилет: Выдели главное с <b>",
+            explanation: "Спецагенту часто нужно выделить пароль или секретное слово жирным шрифтом. Для этого используется тег <b>&lt;b&gt;</b> (от слова Bold — жирный).",
+            formula: "<b>Жирное слово</b>",
+            tasks: [
+              { id: "2-1-1", text: "Сделай хотя бы одно слово жирным с помощью <b>...</b>", xp: 50, check: (code) => /<b>\s*[^<>]+\s*<\/b>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "2-2",
+            stepName: "Курсив <i>",
+            tag: "<i>",
+            headline: "Шпионский наклон: Маскировка курсивом <i>",
+            explanation: "Тег <b>&lt;i&gt;</b> наклоняет буквы вправо (Italic — курсив). Отлично подходит для секретных заметок и мыслей агента!",
+            formula: "<i>Наклонный текст</i>",
+            tasks: [
+              { id: "2-2-1", text: "Добавь курсивный текст с тегом <i>...</i>", xp: 50, check: (code) => /<i>\s*[^<>]+\s*<\/i>/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "Секретный инвентарь",
+        badge: "Хранитель Снаряжения 🎒",
+        minXp: 350,
+        steps: [
+          {
+            stepId: "3-1",
+            stepName: "Рюкзак <ul>",
+            tag: "<ul>",
+            headline: "Шпионский список: Создай контейнер <ul>",
+            explanation: "Перед выходом на миссию проверим экипировку! Списки в вебе создаются парным тегом <b>&lt;ul&gt;&lt;/ul&gt;</b> (Unordered List).",
+            formula: "<ul> ... </ul>",
+            tasks: [
+              { id: "3-1-1", text: "Напиши тег списка <ul></ul> в редакторе", xp: 50, check: (code) => /<ul>[\s\S]*<\/ul>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "3-2",
+            stepName: "Предмет <li>",
+            tag: "<li>",
+            headline: "Вещи агента: Добавь пункты <li>",
+            explanation: "Внутри <code>&lt;ul&gt;</code> каждый предмет упаковывается в тег <b>&lt;li&gt;</b> (List Item). Например: часы, фонарик, карта.",
+            formula: "<ul> <li>Часы</li> <li>Фонарик</li> </ul>",
+            tasks: [
+              { id: "3-2-1", text: "Добавь как минимум 2 пункта <li> внутри <ul>", xp: 60, check: (code) => {
+                const matches = code.match(/<li>[\s\S]*?<\/li>/gi);
+                return matches && matches.length >= 2;
+              }}
+            ]
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "Фотодосье и порталы",
+        badge: "Разведчик Сети 📸",
+        minXp: 500,
+        steps: [
+          {
+            stepId: "4-1",
+            stepName: "Фото <img>",
+            tag: "<img>",
+            headline: "Фотография агента: Вставь картинку с <img>",
+            explanation: "Тег <b>&lt;img&gt;</b> вставляет изображение. Адрес картинки пишется в атрибуте <code>src='...'</code>, а ширина в <code>width='200'</code>.",
+            formula: "<img src='...' width='240'>",
+            tasks: [
+              { id: "4-1-1", text: "Добавь тег <img> с атрибутом src", xp: 60, check: (code) => /<img[^>]+src=['"][^'"]+['"][^>]*>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "4-2",
+            stepName: "Портал <a>",
+            tag: "<a>",
+            headline: "Секретный портал: Гиперссылка с тегом <a>",
+            explanation: "Тег <b>&lt;a&gt;</b> создает кликабельную ссылку-телепорт! Адрес назначения пишется внутри атрибута <code>href='...'</code>.",
+            formula: "<a href='https://...'>Текст ссылки</a>",
+            tasks: [
+              { id: "4-2-1", text: "Создай рабочую ссылку <a href='...'>...</a>", xp: 60, check: (code) => /<a[^>]+href=['"][^'"]+['"][^>]*>[\s\S]+?<\/a>/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 5,
+        title: "Цвета и лазерная кнопка",
+        badge: "Инженер Лаборатории 🎨",
+        minXp: 700,
+        steps: [
+          {
+            stepId: "5-1",
+            stepName: "Стили <style>",
+            tag: "<style>",
+            headline: "Цвета базы: Добавь стили с тегом <style>",
+            explanation: "Тег <b>&lt;style&gt;</b> подключает правила CSS. С их помощью можно раскрасить фон сайта и текст в любой цвет!",
+            formula: "<style> body { background: #eff6ff; color: #1e3a8a; } </style>",
+            tasks: [
+              { id: "5-1-1", text: "Добавь тег <style> с правилом для цвета фона или текста", xp: 70, check: (code) => /<style>[\s\S]*?(background|color)[\s\S]*?<\/style>/i.test(code) }
+            ]
+          },
+          {
+            stepId: "5-2",
+            stepName: "Кнопка <button>",
+            tag: "<button>",
+            headline: "Красная кнопка: Интерактивный тег <button>",
+            explanation: "Тег <b>&lt;button&gt;</b> создает настоящую кнопку на экране, на которую можно нажимать мышкой или пальцем на iPad!",
+            formula: "<button onclick='alert(\"Кнопка нажата!\")'>Нажми меня</button>",
+            tasks: [
+              { id: "5-2-1", text: "Создай кнопку <button>...</button> в редакторе", xp: 70, check: (code) => /<button[\s\S]*?>[\s\S]+?<\/button>/i.test(code) }
+            ]
+          }
+        ]
+      },
+      {
+        id: 6,
+        title: "Финальная спецоперация",
+        badge: "Глава Академии 👑",
+        minXp: 950,
+        steps: [
+          {
+            stepId: "6-1",
+            stepName: "Финальный Шедевр",
+            tag: "ДИПЛОМ",
+            headline: "Финальная спецоперация: Напиши Досье Героя!",
+            explanation: "Собери воедино всё, чему научился: напиши заголовок <code>&lt;h1&gt;</code>, карточку, стили <code>&lt;style&gt;</code> и интерактивную кнопку!",
+            formula: "HTML + CSS = Полноценный сайт!",
+            tasks: [
+              { id: "6-1-1", text: "Напиши заголовок <h1> и карточку со стилями <style>", xp: 150, check: (code) => /<h1>/i.test(code) && /<style>/i.test(code) },
+              { id: "6-1-2", text: "Нажми 'Проверить' и открой Золотой Диплом!", xp: 150, check: () => true }
+            ]
+          }
+        ]
+      }
+    ];
+
+    // -------------------------------------------------------------
+    // FLATTENED 15 CONTINUOUS LEVELS (FLEXBOX FROGGY STYLE)
+    // -------------------------------------------------------------
+    const LEVELS = [];
+    MISSIONS.forEach(mission => {
+      mission.steps.forEach((step, sIdx) => {
+        LEVELS.push({
+          levelIndex: LEVELS.length, // 0..14
+          levelNum: LEVELS.length + 1, // 1..15
+          missionId: mission.id,
+          stepIndex: sIdx,
+          missionTitle: mission.title,
+          missionBadge: mission.badge,
+          stepName: step.stepName,
+          step: step,
+          minXp: mission.minXp
+        });
+      });
+    });
+
+    // -------------------------------------------------------------
+    // BLOCK QUIZZES DATA (ВИКТОРИНЫ ПОСЛЕ КАЖДОГО БЛОКА)
+    // -------------------------------------------------------------
+    const BLOCK_QUIZZES = {
+      0: {
+        blockId: 0,
+        blockTitle: "Дело №0: Чертёж сайта (Анатомия HTML)",
+        questions: [
+          {
+            question: "Какой тег сообщает браузеру, что документ написан на современном стандарте HTML5?",
+            options: [
+              "<!DOCTYPE html>",
+              "<robot start>",
+              "<html5-code>"
+            ],
+            correctIndex: 0,
+            explanation: "<!DOCTYPE html> — это паспорт сайта, сообщающий браузеру об использовании стандарта HTML5."
+          },
+          {
+            question: "В какой невидимой части страницы прячутся служебные настройки и название вкладки?",
+            options: [
+              "<head> (Мозг сайта)",
+              "<body> (Тело сайта)",
+              "<footer-secret>"
+            ],
+            correctIndex: 0,
+            explanation: "В теге <head> хранятся настройки сайта, подключение стилей и заголовок вкладки <title>."
+          },
+          {
+            question: "Где обязательно должен находиться весь видимый контент сайта (заголовки, текст, фото)?",
+            options: [
+              "До тега <!DOCTYPE html>",
+              "Внутри тега <body> ... </body>",
+              "Внутри тега <head>"
+            ],
+            correctIndex: 1,
+            explanation: "Всё, что посетитель видит на экране iPad, обязательно помещается между <body> и </body>."
+          }
+        ]
+      },
+      1: {
+        blockId: 1,
+        blockTitle: "Дело №1: Первые слова шпиона (h1, p)",
+        questions: [
+          {
+            question: "Какой тег создает самый главный и крупный заголовок на веб-странице?",
+            options: [
+              "<h1>",
+              "<p>",
+              "<bigtitle>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <h1> (Heading 1) — самый важный и громкий рупор страницы."
+          },
+          {
+            question: "Как правильно закрывается парный тег абзаца текста?",
+            options: [
+              "<p/>",
+              "</p>",
+              "<close p>"
+            ],
+            correctIndex: 1,
+            explanation: "Парные теги всегда закрываются косой чертой перед именем тега: </p>."
+          },
+          {
+            question: "Какова главная роль тега <p> в разметке текста?",
+            options: [
+              "Создать отдельный абзац текста с удобными отступами",
+              "Запустить видеоролик",
+              "Сделать все буквы невидимыми"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <p> (Paragraph) форматирует текст в аккуратный читаемый абзац."
+          }
+        ]
+      },
+      2: {
+        blockId: 2,
+        blockTitle: "Дело №2: Маскировка текста (b, i)",
+        questions: [
+          {
+            question: "Какой тег делает буквы полужирными и бронированными (bold)?",
+            options: [
+              "<b>",
+              "<i>",
+              "<bold>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <b> происходит от слова Bold и делает начертание шрифта жирным."
+          },
+          {
+            question: "Какой тег наклоняет текст изящным курсивом (italic)?",
+            options: [
+              "<slant>",
+              "<i>",
+              "<b>"
+            ],
+            correctIndex: 1,
+            explanation: "Тег <i> происходит от слова Italic и наклоняет буквы курсивом."
+          },
+          {
+            question: "Как правильно выделить слово жирным ВНУТРИ параграфа по правилу «матрешки»?",
+            options: [
+              "<p>Пароль: <b>1234</b></p>",
+              "<p>Пароль: <b>1234</p></b>",
+              "<b><p>Пароль: 1234</b></p>"
+            ],
+            correctIndex: 0,
+            explanation: "Внутренний тег <b> должен закрыться раньше, чем закроется внешний тег <p>."
+          }
+        ]
+      },
+      3: {
+        blockId: 3,
+        blockTitle: "Дело №3: Секретный инвентарь (ul, li)",
+        questions: [
+          {
+            question: "Какой тег создает контейнер для маркированного списка (с точками)?",
+            options: [
+              "<ul>",
+              "<li>",
+              "<items>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <ul> (Unordered List) создает маркированный список."
+          },
+          {
+            question: "Какой тег оборачивает КАЖДЫЙ отдельный пункт внутри списка?",
+            options: [
+              "<point>",
+              "<li>",
+              "<item>"
+            ],
+            correctIndex: 1,
+            explanation: "Тег <li> (List Item) задает отдельную строчку-пункт внутри списка."
+          },
+          {
+            question: "Может ли пункт <li> находиться на странице сам по себе без тега <ul> или <ol>?",
+            options: [
+              "Нет, по стандарту HTML теги <li> всегда должны быть обернуты в тег списка",
+              "Да, в любом месте",
+              "Только если это таблица"
+            ],
+            correctIndex: 0,
+            explanation: "Теги <li> — дочерние элементы и семантически всегда требуют родителя <ul> или <ol>."
+          }
+        ]
+      },
+      4: {
+        blockId: 4,
+        blockTitle: "Дело №4: Фотодосье и порталы (img, a)",
+        questions: [
+          {
+            question: "В каком атрибуте тега <img> указывается адрес файла картинки?",
+            options: [
+              "link='...'",
+              "src='...'",
+              "href='...'"
+            ],
+            correctIndex: 1,
+            explanation: "Атрибут src (source — источник) указывает браузеру путь к файлу изображения."
+          },
+          {
+            question: "Какой тег превращает текст или картинку в кликабельную ссылку-портал?",
+            options: [
+              "<a>",
+              "<link>",
+              "<go>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <a> (Anchor — якорь) создает гиперссылку для перехода между сайтами."
+          },
+          {
+            question: "Какой атрибут ссылки указывает интернет-адрес назначения?",
+            options: [
+              "href='...'",
+              "target='...'",
+              "to='...'"
+            ],
+            correctIndex: 0,
+            explanation: "В атрибуте href (Hypertext Reference) пишется целевой веб-адрес."
+          }
+        ]
+      },
+      5: {
+        blockId: 5,
+        blockTitle: "Дело №5: Цвета и лазерная кнопка (style, button)",
+        questions: [
+          {
+            question: "Внутри какого тега HTML пишутся правила оформления CSS?",
+            options: [
+              "<color>",
+              "<paint>",
+              "<style>"
+            ],
+            correctIndex: 2,
+            explanation: "В тег <style> помещаются правила языка стилей CSS."
+          },
+          {
+            question: "Какое CSS-свойство перекрашивает задний фон элемента или страницы?",
+            options: [
+              "background",
+              "text-color",
+              "border-style"
+            ],
+            correctIndex: 0,
+            explanation: "Свойство background (или background-color) управляет заливкой фона."
+          },
+          {
+            question: "Какой тег создает кликабельную кнопку на веб-странице?",
+            options: [
+              "<button>",
+              "<click>",
+              "<press>"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <button> создает интерактивную кнопку для кликов и касаний."
+          }
+        ]
+      },
+      6: {
+        blockId: 6,
+        blockTitle: "Дело №6: Финальная спецоперация",
+        questions: [
+          {
+            question: "В каком порядке должны следовать главные теги любого сайта?",
+            options: [
+              "<!DOCTYPE html> ➔ <html> ➔ <head> ➔ <body>",
+              "<body> ➔ <head> ➔ <html> ➔ <!DOCTYPE html>",
+              "<html> ➔ <!DOCTYPE html> ➔ <body> ➔ <head>"
+            ],
+            correctIndex: 0,
+            explanation: "Всегда сначала идет <!DOCTYPE html>, затем <html>, служебный <head> и видимый <body>."
+          },
+          {
+            question: "Как сделать так, чтобы при клике на картинку открывался другой сайт?",
+            options: [
+              "Обернуть <img> внутрь ссылки: <a href='...'><img src='...'></a>",
+              "Написать <img href='...'>",
+              "Картинки не могут быть ссылками"
+            ],
+            correctIndex: 0,
+            explanation: "Тег <a> может обернуть любой видимый элемент, включая картинку <img>."
+          },
+          {
+            question: "Что означает всемирная аббревиатура HTML?",
+            options: [
+              "HyperText Markup Language (Язык разметки гипертекста)",
+              "High Tech Machine Learning",
+              "Huge Tool Making Links"
+            ],
+            correctIndex: 0,
+            explanation: "HTML — HyperText Markup Language, фундамент всех сайтов в сети интернет."
+          }
+        ]
+      }
+    };
+
+    // -------------------------------------------------------------
+    // LOCAL STATE (RESTORED FROM BROWSER STORAGE)
+    // -------------------------------------------------------------
+    let savedLevel = parseInt(localStorage.getItem("astro_current_level") || "0", 10);
+    if (isNaN(savedLevel) || savedLevel < 0 || savedLevel >= LEVELS.length) {
+      // Fallback from old keys if present
+      const oldMission = parseInt(localStorage.getItem("astro_current_mission") || "0", 10);
+      const oldStep = parseInt(localStorage.getItem("astro_current_step") || "0", 10);
+      const found = LEVELS.find(l => l.missionId === oldMission && l.stepIndex === oldStep);
+      savedLevel = found ? found.levelIndex : 0;
+    }
+
+    let state = {
+      agentName: localStorage.getItem("astro_agent_name") || "Агент 007",
+      avatar: localStorage.getItem("astro_avatar") || "🕵️‍♂️",
+      currentLevelIndex: savedLevel,
+      xp: parseInt(localStorage.getItem("astro_xp") || "0", 10),
+      completedTasks: JSON.parse(localStorage.getItem("astro_tasks") || "[]"),
+      soundEnabled: localStorage.getItem("astro_sound") !== "false"
+    };
+
+    // -------------------------------------------------------------
+    // WEB AUDIO SYNTHESIZER
+    // -------------------------------------------------------------
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function playSound(type) {
+      if (!state.soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new AudioContextClass();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        if (type === 'click') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(540, now);
+          osc.frequency.exponentialRampToValueAtTime(320, now + 0.04);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.04);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (type === 'xp') {
+          [523.25, 659.25, 783.99].forEach((f, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(f, now + i * 0.06);
+            gain.gain.setValueAtTime(0.1, now + i * 0.06);
+            gain.gain.linearRampToValueAtTime(0.01, now + (i + 1) * 0.06);
+            osc.start(now + i * 0.06);
+            osc.stop(now + (i + 1) * 0.06);
+          });
+        } else if (type === 'win') {
+          [440, 554.37, 659.25, 880].forEach((f, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(f, now + i * 0.09);
+            gain.gain.setValueAtTime(0.12, now + i * 0.09);
+            gain.gain.linearRampToValueAtTime(0.01, now + (i + 1) * 0.09);
+            osc.start(now + i * 0.09);
+            osc.stop(now + (i + 1) * 0.09);
+          });
+        }
+      } catch (e) {
+        // Audio suspended or blocked
+      }
+    }
+
+    // -------------------------------------------------------------
+    // CONFETTI CANNON
+    // -------------------------------------------------------------
+    function launchConfetti() {
+      const canvas = document.getElementById("confetti-canvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#2563eb', '#38bdf8', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'];
+
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height * 0.65,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.8) * 18,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rot: Math.random() * 360,
+          vrot: (Math.random() - 0.5) * 10,
+          alpha: 1
+        });
+      }
+
+      function step() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = 0;
+        particles.forEach(p => {
+          if (p.alpha > 0) {
+            active++;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.35;
+            p.rot += p.vrot;
+            p.alpha -= 0.012;
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rot * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+            ctx.restore();
+          }
+        });
+        if (active > 0) requestAnimationFrame(step);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // -------------------------------------------------------------
+    // STORAGE SAVE & RESTORE
+    // -------------------------------------------------------------
+    function saveState() {
+      try {
+        localStorage.setItem("astro_agent_name", state.agentName);
+        localStorage.setItem("astro_avatar", state.avatar);
+        localStorage.setItem("astro_xp", state.xp.toString());
+        localStorage.setItem("astro_tasks", JSON.stringify(state.completedTasks));
+        localStorage.setItem("astro_current_level", state.currentLevelIndex.toString());
+        localStorage.setItem("astro_sound", state.soundEnabled ? "true" : "false");
+      } catch (e) {
+        console.warn("Storage save error", e);
+      }
+    }
+
+    function saveCurrentCode() {
+      try {
+        const textarea = document.getElementById("code-editor");
+        if (textarea && state.currentLevelIndex !== undefined) {
+          const key = `astro_code_lvl_${state.currentLevelIndex}`;
+          localStorage.setItem(key, textarea.value);
+        }
+      } catch (e) {
+        console.warn("Storage code save error", e);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // LEVEL LOADING & RENDERING
+    // -------------------------------------------------------------
+    function loadLevel(lvlIndex) {
+      if (lvlIndex < 0 || lvlIndex >= LEVELS.length) return;
+
+      saveCurrentCode();
+      state.currentLevelIndex = lvlIndex;
+      saveState();
+
+      const lvl = LEVELS[lvlIndex];
+      const step = lvl.step;
+
+      // Update Top Nav
+      const levelDropdownText = document.getElementById("level-dropdown-text");
+      if (levelDropdownText) {
+        levelDropdownText.textContent = `Уровень ${lvl.levelNum} из ${LEVELS.length}`;
+      }
+
+      const prevBtn = document.getElementById("prev-level-btn");
+      if (prevBtn) prevBtn.disabled = lvlIndex === 0;
+
+      const nextTopBtn = document.getElementById("next-level-btn-top");
+      if (nextTopBtn) nextTopBtn.disabled = lvlIndex === LEVELS.length - 1;
+
+      // Update Instructions Area
+      const badgeEl = document.getElementById("briefing-badge");
+      if (badgeEl) badgeEl.textContent = `ДЕЛО №${lvl.missionId}: ${lvl.missionTitle}`;
+
+      const headlineEl = document.getElementById("step-headline");
+      if (headlineEl) headlineEl.textContent = step.headline;
+
+      const explanationEl = document.getElementById("step-explanation");
+      if (explanationEl) explanationEl.innerHTML = step.explanation;
+
+      const formulaEl = document.getElementById("step-formula");
+      if (formulaEl) formulaEl.textContent = step.formula;
+
+      const taskSingleText = document.getElementById("task-single-text");
+      if (taskSingleText && step.tasks && step.tasks.length > 0) {
+        const isDone = step.tasks.every(t => state.completedTasks.includes(t.id));
+        taskSingleText.innerHTML = (isDone ? '✅ ' : '🎯 ') + step.tasks[0].text;
+      }
+
+      // Update Safari URL to match current level
+      const urlText = document.getElementById("safari-url-text");
+      if (urlText) urlText.textContent = `agent-net.secret/level-${lvl.levelNum}.html`;
+
+      // Update Code Editor with Saved Code
+      const savedCodeKey = `astro_code_lvl_${lvlIndex}`;
+      const legacyKey = `astro_code_m_${lvl.missionId}_s_${lvl.stepIndex}`;
+      const code = localStorage.getItem(savedCodeKey) || localStorage.getItem(legacyKey) || "";
+
+      const textarea = document.getElementById("code-editor");
+      if (textarea) {
+        textarea.value = code;
+        if (step.isIntroOnly) {
+          textarea.placeholder = "🔍 Пункт для ознакомления. Нажми кнопку 'Проверить' (+XP)!";
+        } else {
+          textarea.placeholder = "Напиши теги своими руками здесь...";
+        }
+      }
+
+      // Skeleton Tag Highlights for Mission 0
+      document.querySelectorAll(".code-locked-line").forEach(el => el.classList.remove("skel-active"));
+      if (lvl.missionId === 0) {
+        if (lvl.stepIndex === 0) {
+          document.getElementById("skel-doctype")?.classList.add("skel-active");
+        } else if (lvl.stepIndex === 1) {
+          document.getElementById("skel-html")?.classList.add("skel-active");
+          document.getElementById("skel-html-end")?.classList.add("skel-active");
+        } else if (lvl.stepIndex === 2) {
+          document.getElementById("skel-head")?.classList.add("skel-active");
+        } else if (lvl.stepIndex === 3) {
+          document.getElementById("skel-body")?.classList.add("skel-active");
+          document.getElementById("skel-body-end")?.classList.add("skel-active");
+        }
+      }
+
+      // Check if level already passed to show "Next" button
+      const allTasksDone = step.tasks.every(t => state.completedTasks.includes(t.id));
+      const nextBtn = document.getElementById("next-level-btn");
+      if (nextBtn) {
+        if (allTasksDone && lvlIndex < LEVELS.length - 1) {
+          nextBtn.classList.add("visible");
+        } else {
+          nextBtn.classList.remove("visible");
+        }
+      }
+
+      renderLevelPickerGrid();
+      updatePreview();
+      updateHeaderUI();
+    }
+
+    // -------------------------------------------------------------
+    // LEVEL PICKER POPOVER (FROGGY LEVEL MENU)
+    // -------------------------------------------------------------
+    function renderLevelPickerGrid() {
+      const grid = document.getElementById("level-picker-grid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      MISSIONS.forEach(mission => {
+        const missionLevels = LEVELS.filter(l => l.missionId === mission.id);
+        const group = document.createElement("div");
+        group.className = "level-case-group";
+
+        const label = document.createElement("div");
+        label.className = "level-case-label";
+        label.textContent = `Дело №${mission.id}: ${mission.title}`;
+        group.appendChild(label);
+
+        const row = document.createElement("div");
+        row.className = "level-pills-row";
+
+        missionLevels.forEach(lvl => {
+          const isDone = lvl.step.tasks.every(t => state.completedTasks.includes(t.id));
+          const isActive = lvl.levelIndex === state.currentLevelIndex;
+          const isUnlocked = state.xp >= lvl.minXp || lvl.missionId === 0;
+
+          const btn = document.createElement("button");
+          btn.className = `level-pill-btn ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}`;
+          btn.innerHTML = `${lvl.levelNum} ${isDone ? '✓' : (!isUnlocked ? '🔒' : '')}`;
+          btn.title = `Уровень ${lvl.levelNum}: ${lvl.stepName}`;
+
+          if (isUnlocked) {
+            btn.onclick = () => {
+              playSound('click');
+              loadLevel(lvl.levelIndex);
+              closeLevelPicker();
+            };
+          } else {
+            btn.style.opacity = "0.4";
+            btn.onclick = () => {
+              showModal("🔒 Уровень закрыт", `Для доступа к Делу №${lvl.missionId} нужно набрать ${lvl.minXp} XP!`);
+            };
+          }
+          row.appendChild(btn);
+        });
+
+        group.appendChild(row);
+        grid.appendChild(group);
+      });
+    }
+
+    function toggleLevelPicker() {
+      const popover = document.getElementById("level-picker-popover");
+      if (popover) {
+        popover.classList.toggle("open");
+        playSound('click');
+      }
+    }
+
+    function closeLevelPicker() {
+      document.getElementById("level-picker-popover")?.classList.remove("open");
+    }
+
+    // -------------------------------------------------------------
+    // LIVE PREVIEW ON iPAD
+    // -------------------------------------------------------------
+    function updatePreview() {
+      const textarea = document.getElementById("code-editor");
+      const iframe = document.getElementById("preview-frame");
+      if (!textarea || !iframe) return;
+
+      const code = textarea.value;
+      saveCurrentCode();
+
+      const fullHtml = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Секретный Штаб Агента</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      color: #0f172a;
+      background-color: #ffffff;
+      line-height: 1.6;
+    }
+    h1 { margin-top: 0; font-size: 28px; }
+  </style>
+</head>
+<body>
+${code}
+</body>
+</html>`;
+
+      iframe.srcdoc = fullHtml;
+    }
+
+    // Temporary toast on iPad screen
+    let toastTimer = null;
+    function showIpadToast(message) {
+      const toast = document.getElementById("ipad-run-toast");
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1400);
+    }
+
+    // Run Code only (renders live directly inside iPad)
+    function runCode() {
+      playSound('click');
+      updatePreview();
+
+      const reloadIcon = document.getElementById("safari-reload-btn");
+      if (reloadIcon) {
+        reloadIcon.classList.remove("spinning");
+        void reloadIcon.offsetWidth;
+        reloadIcon.classList.add("spinning");
+      }
+
+      const screen = document.querySelector(".ipad-vector-screen");
+      if (screen) {
+        screen.classList.add("screen-run-flash");
+        setTimeout(() => screen.classList.remove("screen-run-flash"), 450);
+      }
+
+      showIpadToast("🚀 Сайт запущен на iPad!");
+    }
+
+    // -------------------------------------------------------------
+    // CHECK CODE & TASK VALIDATION
+    // -------------------------------------------------------------
+    function checkCode() {
+      playSound('click');
+      updatePreview();
+
+      const lvl = LEVELS[state.currentLevelIndex];
+      const step = lvl.step;
+      const textarea = document.getElementById("code-editor");
+      const code = textarea ? textarea.value.trim() : "";
+
+      let count = 0;
+      let earnedXp = 0;
+
+      step.tasks.forEach(task => {
+        if (!state.completedTasks.includes(task.id)) {
+          if (task.check && task.check(code)) {
+            state.completedTasks.push(task.id);
+            state.xp += task.xp;
+            earnedXp += task.xp;
+            count++;
+          }
+        }
+      });
+
+      if (count > 0) {
+        playSound('win');
+        launchConfetti();
+        showIpadToast(`🌟 Задание выполнено! +${earnedXp} XP`);
+
+        const modalMsg = step.isIntroOnly
+          ? `Отлично! Ты успешно изучил тег ${step.tag}!\nЗачислено +${earnedXp} XP!\n\nЖми 'Дальше →' для следующего уровня!`
+          : `Шифр проверен! Выполнено заданий: ${count}. Зачислено +${earnedXp} XP!\n\nТвой сайт отобразился на iPad! Жми 'Дальше →'!`;
+
+        showModal("🌟 Отличная работа, агент!", modalMsg);
+
+        // Show Next Level Button
+        const nextBtn = document.getElementById("next-level-btn");
+        if (nextBtn && state.currentLevelIndex < LEVELS.length - 1) {
+          nextBtn.classList.add("visible");
+        }
+
+        saveState();
+        updateHeaderUI();
+        renderLevelPickerGrid();
+
+        const taskSingleText = document.getElementById("task-single-text");
+        if (taskSingleText) {
+          taskSingleText.innerHTML = '✅ ' + step.tasks[0].text;
+        }
+      } else {
+        const remaining = step.tasks.filter(t => !state.completedTasks.includes(t.id));
+        if (remaining.length > 0) {
+          showModal("🔍 Проверка задания", `Сайт запущен на iPad! 📱\n\nЧтобы пройти этот уровень и получить XP:\n👉 ${remaining[0].text}`);
+        } else {
+          showModal("🎉 Уровень уже пройден!", "Все задачи этого уровня уже решены! Жми кнопку 'Дальше →' для продолжения.");
+          document.getElementById("next-level-btn")?.classList.add("visible");
+        }
+      }
+    }
+
+    // Step / Level Navigation
+    function nextLevel() {
+      const currentLvl = LEVELS[state.currentLevelIndex];
+      const mission = MISSIONS[currentLvl.missionId];
+      const isLastStepOfMission = currentLvl.stepIndex === mission.steps.length - 1;
+
+      // If at end of mission and haven't just completed its quiz:
+      if (isLastStepOfMission && !quizState.justCompletedBlockQuiz[currentLvl.missionId]) {
+        openQuizForBlock(currentLvl.missionId, true);
+        return;
+      }
+
+      // Reset flag
+      quizState.justCompletedBlockQuiz[currentLvl.missionId] = false;
+
+      if (state.currentLevelIndex < LEVELS.length - 1) {
+        playSound('click');
+        loadLevel(state.currentLevelIndex + 1);
+      } else {
+        openDiploma();
+      }
+    }
+
+    function prevLevel() {
+      if (state.currentLevelIndex > 0) {
+        playSound('click');
+        loadLevel(state.currentLevelIndex - 1);
+      }
+    }
+
+    // Quick Tag Helper
+    function insertTag(startTag, endTag = "") {
+      const textarea = document.getElementById("code-editor");
+      if (!textarea) return;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+      const selected = text.substring(start, end);
+
+      const replacement = startTag + selected + endTag;
+      textarea.value = text.substring(0, start) + replacement + text.substring(end);
+
+      textarea.focus();
+      textarea.selectionStart = start + startTag.length;
+      textarea.selectionEnd = start + startTag.length + selected.length;
+
+      saveCurrentCode();
+      playSound('click');
+      updatePreview();
+    }
+
+    // Update Header XP & Info
+    function updateHeaderUI() {
+      const xpNum = document.getElementById("current-xp-num");
+      if (xpNum) xpNum.textContent = state.xp.toString();
+
+      const nameInp = document.getElementById("agent-name-input");
+      if (nameInp) nameInp.value = state.agentName;
+
+      const avatarBtn = document.getElementById("agent-avatar");
+      if (avatarBtn) avatarBtn.textContent = state.avatar;
+    }
+
+    // -------------------------------------------------------------
+    // MODALS: TAGS LIBRARY & DIPLOMA
+    // -------------------------------------------------------------
+    function renderTagsLibrary() {
+      const grid = document.getElementById("tags-cards-grid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      ALL_TAGS.forEach(item => {
+        const isLearned = state.xp >= item.missionLevel * 140;
+        const card = document.createElement("div");
+        card.style.cssText = `
+          background: #ffffff;
+          border: 1px solid ${isLearned ? '#bfdbfe' : '#e2e8f0'};
+          border-radius: 14px;
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        `;
+
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 20px;">${item.icon}</span>
+              <code style="font-size: 13.5px; font-weight: 800; color: #1d4ed8; background: #eff6ff; padding: 2px 7px; border-radius: 6px;">${item.tag}</code>
+            </div>
+            <span style="font-size: 11px; font-weight: 800; color: ${isLearned ? '#059669' : '#94a3b8'}; background: ${isLearned ? '#ecfdf5' : '#f1f5f9'}; padding: 2px 7px; border-radius: 10px;">
+              ${isLearned ? 'Изучено ✅' : `Дело №${item.missionLevel}`}
+            </span>
+          </div>
+          <div style="font-size: 13.5px; font-weight: 800; color: #1e293b;">${item.name}</div>
+          <div style="font-size: 12.5px; color: #475569; line-height: 1.45;">${item.analogy}</div>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; font-family: var(--font-mono); font-size: 11.5px; color: #0f172a; white-space: pre-wrap;">${escapeHtml(item.example)}</div>
+          <button class="btn-soft" style="align-self: flex-start; font-size: 11px; padding: 5px 10px;" onclick="copyTagExample('${escapeAttr(item.example)}')">
+            📋 Скопировать пример
+          </button>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function escapeAttr(str) {
+      return str.replace(/'/g, "\\'").replace(/\n/g, "\\n");
+    }
+
+    window.copyTagExample = function(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        playSound('click');
+        showModal("📋 Скопировано!", "Код скопирован в буфер. Теперь можешь вставить его в окно редактора!");
+      });
+    };
+
+    function openTagsModal() {
+      playSound('click');
+      renderTagsLibrary();
+      document.getElementById("tags-library-container")?.classList.add("open");
+    }
+
+    function closeTagsModal() {
+      playSound('click');
+      document.getElementById("tags-library-container")?.classList.remove("open");
+    }
+
+    function openDiploma() {
+      playSound('win');
+      launchConfetti();
+      const cert = document.getElementById("certificate-container");
+      if (cert) cert.classList.add("open");
+
+      const certName = document.getElementById("cert-agent-name");
+      const certScore = document.getElementById("cert-xp-score");
+      const certDate = document.getElementById("cert-date");
+
+      if (certName) certName.textContent = state.agentName.toUpperCase();
+      if (certScore) certScore.textContent = state.xp.toString();
+      if (certDate) certDate.textContent = new Date().toLocaleDateString('ru-RU');
+    }
+
+    function closeDiploma() {
+      playSound('click');
+      document.getElementById("certificate-container")?.classList.remove("open");
+    }
+
+    function showModal(title, message) {
+      const overlay = document.getElementById("modal-overlay");
+      const titleEl = document.getElementById("modal-title");
+      const bodyEl = document.getElementById("modal-body");
+      if (titleEl) titleEl.textContent = title;
+      if (bodyEl) bodyEl.textContent = message;
+      if (overlay) overlay.classList.add("open");
+    }
+
+    function closeModal() {
+      playSound('click');
+      document.getElementById("modal-overlay")?.classList.remove("open");
+    }
+
+    // -------------------------------------------------------------
+    // QUIZ CONTROLLER (ВИКТОРИНА ПОСЛЕ КАЖДОГО БЛОКА)
+    // -------------------------------------------------------------
+    const quizState = {
+      activeBlockId: 0,
+      currentQIdx: 0,
+      userAnswers: [],
+      autoNextOnFinish: false,
+      justCompletedBlockQuiz: {}
+    };
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function openQuizForBlock(blockId, autoNext = false) {
+      playSound('click');
+      const quiz = BLOCK_QUIZZES[blockId] || BLOCK_QUIZZES[0];
+      quizState.activeBlockId = blockId;
+      quizState.currentQIdx = 0;
+      quizState.userAnswers = [];
+      quizState.autoNextOnFinish = autoNext;
+
+      const titleEl = document.getElementById("quiz-block-title");
+      if (titleEl) titleEl.textContent = quiz.blockTitle;
+
+      const badgeEl = document.getElementById("quiz-badge");
+      if (badgeEl) badgeEl.textContent = `🎯 ВИКТОРИНА: ДЕЛО №${blockId}`;
+
+      const qView = document.getElementById("quiz-question-view");
+      const rView = document.getElementById("quiz-result-view");
+      if (qView) qView.style.display = "block";
+      if (rView) rView.style.display = "none";
+
+      renderQuizQuestion();
+      document.getElementById("quiz-modal-overlay")?.classList.add("open");
+    }
+
+    function closeQuiz() {
+      playSound('click');
+      document.getElementById("quiz-modal-overlay")?.classList.remove("open");
+    }
+
+    function renderQuizQuestion() {
+      const quiz = BLOCK_QUIZZES[quizState.activeBlockId];
+      if (!quiz) return;
+      const q = quiz.questions[quizState.currentQIdx];
+      const total = quiz.questions.length;
+
+      const stepText = document.getElementById("quiz-step-text");
+      if (stepText) stepText.textContent = `Вопрос ${quizState.currentQIdx + 1} из ${total}`;
+
+      const progressFill = document.getElementById("quiz-progress-fill");
+      if (progressFill) {
+        const pct = Math.round(((quizState.currentQIdx + 1) / total) * 100);
+        progressFill.style.width = `${pct}%`;
+      }
+
+      const qNum = document.getElementById("quiz-q-num");
+      if (qNum) qNum.textContent = `Вопрос ${quizState.currentQIdx + 1}:`;
+
+      const qTitle = document.getElementById("quiz-q-title");
+      if (qTitle) qTitle.textContent = q.question;
+
+      const letters = ["А", "Б", "В", "Г"];
+      const optionsList = document.getElementById("quiz-options-list");
+      if (optionsList) {
+        optionsList.innerHTML = q.options.map((opt, oIdx) => `
+          <button class="quiz-option-btn" data-opt-idx="${oIdx}">
+            <span class="quiz-opt-letter">${letters[oIdx] || oIdx + 1}</span>
+            <span class="quiz-opt-text">${escapeHtml(opt)}</span>
+          </button>
+        `).join("");
+
+        optionsList.querySelectorAll(".quiz-option-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const idx = parseInt(btn.getAttribute("data-opt-idx") || "0", 10);
+            handleQuizChoice(idx);
+          });
+        });
+      }
+    }
+
+    function handleQuizChoice(choiceIdx) {
+      playSound('click');
+      quizState.userAnswers[quizState.currentQIdx] = choiceIdx;
+      const quiz = BLOCK_QUIZZES[quizState.activeBlockId];
+
+      quizState.currentQIdx++;
+      if (quizState.currentQIdx < quiz.questions.length) {
+        renderQuizQuestion();
+      } else {
+        renderQuizResults();
+      }
+    }
+
+    function renderQuizResults() {
+      const quiz = BLOCK_QUIZZES[quizState.activeBlockId];
+      const qView = document.getElementById("quiz-question-view");
+      const rView = document.getElementById("quiz-result-view");
+      if (qView) qView.style.display = "none";
+      if (rView) rView.style.display = "block";
+
+      let correctCount = 0;
+      quiz.questions.forEach((q, idx) => {
+        if (quizState.userAnswers[idx] === q.correctIndex) {
+          correctCount++;
+        }
+      });
+
+      const iconEl = document.getElementById("quiz-result-icon");
+      const headingEl = document.getElementById("quiz-result-heading");
+      const scoreEl = document.getElementById("quiz-result-score");
+
+      if (correctCount === quiz.questions.length) {
+        launchConfetti();
+        playSound('win');
+        if (iconEl) iconEl.textContent = "🏆";
+        if (headingEl) headingEl.textContent = "Идеальный результат, Спецагент!";
+        if (scoreEl) scoreEl.textContent = `Правильных ответов: ${correctCount} из ${quiz.questions.length} (100%!) 🌟`;
+        state.xp += 25;
+        saveState();
+        updateHeaderUI();
+      } else if (correctCount >= 2) {
+        playSound('win');
+        if (iconEl) iconEl.textContent = "🎖️";
+        if (headingEl) headingEl.textContent = "Отличная работа!";
+        if (scoreEl) scoreEl.textContent = `Правильных ответов: ${correctCount} из ${quiz.questions.length} 👍`;
+      } else {
+        playSound('click');
+        if (iconEl) iconEl.textContent = "🔍";
+        if (headingEl) headingEl.textContent = "Есть над чем поработать!";
+        if (scoreEl) scoreEl.textContent = `Правильных ответов: ${correctCount} из ${quiz.questions.length} — посмотри правильные ответы ниже!`;
+      }
+
+      const breakdownList = document.getElementById("quiz-breakdown-list");
+      if (breakdownList) {
+        breakdownList.innerHTML = quiz.questions.map((q, idx) => {
+          const userChoice = quizState.userAnswers[idx];
+          const isCorrect = userChoice === q.correctIndex;
+          const userAnsText = q.options[userChoice] !== undefined ? q.options[userChoice] : "Не отвечено";
+          const correctAnsText = q.options[q.correctIndex];
+
+          return `
+            <div class="quiz-breakdown-card ${isCorrect ? 'card-correct' : 'card-wrong'}">
+              <div class="breakdown-top-line">
+                <span class="breakdown-q-title">Вопрос ${idx + 1}: ${escapeHtml(q.question)}</span>
+                <span class="breakdown-badge ${isCorrect ? 'badge-correct' : 'badge-wrong'}">
+                  ${isCorrect ? '✅ Верно' : '❌ Ошибка'}
+                </span>
+              </div>
+              <div class="breakdown-your-ans">
+                <strong>Твой ответ:</strong> ${escapeHtml(userAnsText)}
+              </div>
+              ${!isCorrect ? `
+                <div class="breakdown-correct-ans">
+                  👉 <strong>Правильный ответ:</strong> ${escapeHtml(correctAnsText)}
+                </div>
+              ` : ''}
+              <div class="breakdown-explanation">
+                💡 <strong>Объяснение:</strong> ${escapeHtml(q.explanation)}
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+    }
+
+    function retryQuiz() {
+      playSound('click');
+      quizState.currentQIdx = 0;
+      quizState.userAnswers = [];
+      const qView = document.getElementById("quiz-question-view");
+      const rView = document.getElementById("quiz-result-view");
+      if (rView) rView.style.display = "none";
+      if (qView) qView.style.display = "block";
+      renderQuizQuestion();
+    }
+
+    function resetGame() {
+      if (confirm("Точно сбросить весь прогресс и начать все дела заново?")) {
+        localStorage.clear();
+        state.agentName = "Агент 007";
+        state.avatar = "🕵️‍♂️";
+        state.xp = 0;
+        state.completedTasks = [];
+        state.currentLevelIndex = 0;
+        state.soundEnabled = true;
+        saveState();
+        loadLevel(0);
+        playSound('click');
+      }
+    }
+
+    // -------------------------------------------------------------
+    // INITIALIZATION & EVENT LISTENERS
+    // -------------------------------------------------------------
+    function init() {
+      const nameInp = document.getElementById("agent-name-input");
+      const saveName = (e) => {
+        state.agentName = e.target.value.trim() || "Агент 007";
+        saveState();
+      };
+      nameInp?.addEventListener("input", saveName);
+      nameInp?.addEventListener("change", saveName);
+
+      const avatarBtn = document.getElementById("agent-avatar");
+      const avatars = ["🕵️‍♂️", "🥷", "🦸‍♂️", "🐱", "🦁", "🦊", "🚀", "⚡"];
+      avatarBtn?.addEventListener("click", () => {
+        const idx = avatars.indexOf(state.avatar);
+        state.avatar = avatars[(idx + 1) % avatars.length];
+        if (avatarBtn) avatarBtn.textContent = state.avatar;
+        saveState();
+        playSound('click');
+      });
+
+      // Sound button
+      const soundBtn = document.getElementById("sound-btn");
+      if (soundBtn) {
+        soundBtn.textContent = state.soundEnabled ? "🔊 Звук: ВКЛ" : "🔇 Звук: ВЫКЛ";
+      }
+      soundBtn?.addEventListener("click", () => {
+        state.soundEnabled = !state.soundEnabled;
+        soundBtn.textContent = state.soundEnabled ? "🔊 Звук: ВКЛ" : "🔇 Звук: ВЫКЛ";
+        saveState();
+        playSound('click');
+      });
+
+      // Level Picker Trigger
+      document.getElementById("level-dropdown-btn")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleLevelPicker();
+      });
+
+      document.addEventListener("click", (e) => {
+        const popover = document.getElementById("level-picker-popover");
+        if (popover && !popover.contains(e.target) && e.target.id !== "level-dropdown-btn") {
+          closeLevelPicker();
+        }
+      });
+
+      // Top arrows
+      document.getElementById("prev-level-btn")?.addEventListener("click", prevLevel);
+      document.getElementById("next-level-btn-top")?.addEventListener("click", nextLevel);
+
+      // Action buttons
+      document.getElementById("run-code-btn")?.addEventListener("click", runCode);
+      document.getElementById("check-code-btn")?.addEventListener("click", checkCode);
+      document.getElementById("next-level-btn")?.addEventListener("click", nextLevel);
+      document.getElementById("safari-reload-btn")?.addEventListener("click", runCode);
+
+      // Footer Links
+      document.getElementById("footer-tags-btn")?.addEventListener("click", openTagsModal);
+      document.getElementById("back-to-missions-btn")?.addEventListener("click", closeTagsModal);
+      document.getElementById("footer-cert-btn")?.addEventListener("click", openDiploma);
+      document.getElementById("close-diploma-btn")?.addEventListener("click", closeDiploma);
+      document.getElementById("print-diploma-btn")?.addEventListener("click", () => window.print());
+      document.getElementById("reset-btn")?.addEventListener("click", resetGame);
+
+      // Modal close
+      document.getElementById("modal-close-btn")?.addEventListener("click", closeModal);
+
+      // Quiz Listeners
+      document.getElementById("footer-quiz-btn")?.addEventListener("click", () => {
+        const curLvl = LEVELS[state.currentLevelIndex];
+        openQuizForBlock(curLvl.missionId, false);
+      });
+      document.getElementById("quiz-close-x")?.addEventListener("click", closeQuiz);
+      document.getElementById("quiz-retry-btn")?.addEventListener("click", retryQuiz);
+      document.getElementById("quiz-continue-btn")?.addEventListener("click", () => {
+        const autoNext = quizState.autoNextOnFinish;
+        const missionId = quizState.activeBlockId;
+        closeQuiz();
+        if (autoNext) {
+          quizState.justCompletedBlockQuiz[missionId] = true;
+          nextLevel();
+        }
+      });
+
+      // Quick stickers
+      document.querySelectorAll(".sticker-pill-mini").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const target = e.currentTarget;
+          const start = target.getAttribute("data-start") || "";
+          const end = target.getAttribute("data-end") || "";
+          insertTag(start, end);
+        });
+      });
+
+      // Code typing with live update
+      let typingTimer;
+      const editor = document.getElementById("code-editor");
+      editor?.addEventListener("input", () => {
+        saveCurrentCode();
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(updatePreview, 350);
+      });
+
+      // Auto-save on page hide/close
+      window.addEventListener("beforeunload", () => {
+        saveCurrentCode();
+        saveState();
+      });
+      window.addEventListener("pagehide", () => {
+        saveCurrentCode();
+        saveState();
+      });
+
+      // Load initial level
+      loadLevel(state.currentLevelIndex);
+      updateHeaderUI();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>  </body></html>
